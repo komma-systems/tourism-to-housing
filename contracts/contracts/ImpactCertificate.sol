@@ -34,22 +34,22 @@ contract ImpactCertificate is ERC721, Ownable {
         emit MinterSet(minter, allowed);
     }
 
-    /// @notice Issue or raise a host's star. Called by a pool on deposit. A host
-    ///         keeps the highest star across the pools it has joined.
+    /// @notice Set a host's star exactly (up or down), so it can be re-rated each
+    ///         year. Called by the pool. A ★0 host with no certificate stays
+    ///         uncertificated (we do not mint an empty certificate).
     function setStar(address host, uint8 newStar) external {
         require(isMinter[msg.sender], "not a pool");
         require(newStar <= STAR_THREE, "bad star");
         uint256 id = tokenOf[host];
         if (id == 0) {
+            if (newStar == 0) return;
             id = nextId++;
             tokenOf[host] = id;
             _safeMint(host, id);
             emit CertificateIssued(host, id, newStar);
         }
-        if (newStar > star[id]) {
-            star[id] = newStar;
-            emit StarChanged(id, newStar);
-        }
+        star[id] = newStar;
+        emit StarChanged(id, newStar);
     }
 
     function revoke(address host) external onlyOwner {

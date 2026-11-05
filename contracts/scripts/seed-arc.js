@@ -1,6 +1,7 @@
-// Seed the live Arc deployment for the demo (three-pool lending model).
-// Registers three anonymised commons, deposits into the ★★★ pool, lends to two
-// of them, attests + delivers them, and leaves Roquetes fresh for the live lend.
+// Seed the live Arc deployment (single 3% pool, proportional star).
+// Registers three anonymised commons, sets the host's yearly base, and (if the
+// deployer holds EURC) contributes to earn the proportional star, lends to two
+// commons, attests + recognises delivery. Roquetes is left fresh for the live lend.
 const fs = require("fs");
 const path = require("path");
 const { ethers } = require("ethers");
@@ -17,10 +18,9 @@ async function main() {
 
   const registry = new ethers.Contract(d.registry, art("HousingCommonsRegistry"), w);
   const proof = new ethers.Contract(d.proof, art("ProofOfImpact"), w);
-  const pool = new ethers.Contract(d.pools.star3, art("TourismImpactPool"), w);
-  const eurc = new ethers.Contract(d.eurc, art("MockEURC"), w); // ERC20 surface
+  const pool = new ethers.Contract(d.pool, art("TourismImpactPool"), w);
+  const eurc = new ethers.Contract(d.eurc, art("MockEURC"), w);
 
-  // Register three anonymised commons (neighbourhood level, realistic magnitudes).
   if ((await registry.nextId()) === 1n) {
     const commons = [
       ["Poblenou", "sp3e2x", "coop · cessió d'ús", 20, 1300],
@@ -35,30 +35,34 @@ async function main() {
     console.log("registry already seeded (nextId =", (await registry.nextId()).toString(), ")");
   }
 
+  // Set the host's yearly base so a contribution earns the proportional star.
+  // Base 5 EURC: any contribution >= 1.75 EURC (35%) reaches ★★★ on testnet scale.
+  await (await pool.setYearlyBase(me, 5_000_000n)).wait();
+  console.log("set host yearly base to 5 EURC (testnet scale)");
+
   const bal = await eurc.balanceOf(me);
   console.log("deployer EURC balance:", ethers.formatUnits(bal, 6));
   if (bal === 0n) {
-    console.log("no EURC; fund the deployer at faucet.circle.com then re-run.");
+    console.log("no EURC: registry + base seeded. Fund the deployer and run the live contribute to earn the star.");
     return;
   }
 
-  // Deposit into the ★★★ (2.5%) pool → deployer earns ★★★.
-  await (await eurc.approve(d.pools.star3, bal)).wait();
+  await (await eurc.approve(d.pool, bal)).wait();
   await (await pool.deposit(bal, me)).wait();
-  console.log("deposited", ethers.formatUnits(bal, 6), "EURC into the 2.5% pool → ★★★");
+  const bps = await pool.contributionBps(me);
+  const star = await pool.starFor(me);
+  console.log(`deposited ${ethers.formatUnits(bal, 6)} EURC → ${Number(bps) / 100}% of base → ★${star}`);
 
-  // Lend 1 EURC to Poblenou (1) and Sants (2); leave idle cash for the live lend.
-  const loan = 1_000_000n;
-  for (const id of [1, 2]) {
-    await (await pool.disburseCredit(id, me, loan)).wait();
-    console.log("lent 1 EURC to commons", id);
-  }
-
-  // Attest delivery and mark Delivered (homes built; loan can stay outstanding).
-  for (const [id, homes, sqm] of [[1, 20, 1300], [2, 28, 1600]]) {
-    await (await proof.attest(id, homes, sqm, `ipfs://evidence-${id}`)).wait();
-    await (await registry.setStatus(id, 2)).wait(); // Delivered
-    console.log("attested + delivered commons", id);
+  const idleAfter = await eurc.balanceOf(d.pool);
+  const loan = idleAfter >= 2_000_000n ? 1_000_000n : idleAfter / 2n;
+  if (loan > 0n) {
+    for (const id of [1, 2]) {
+      await (await pool.disburseCredit(id, me, loan, me)).wait();
+      await (await proof.attest(id, id === 1 ? 20 : 28, id === 1 ? 1300 : 1600, `ipfs://evidence-${id}`)).wait();
+      await (await pool.recognizeDelivery(id)).wait();
+      console.log("funded + attested + delivered commons", id);
+    }
+    console.log("homes funded by host:", (await pool.homesFundedBy(me)).toString());
   }
   console.log("Roquetes (3) left fresh for the live governor-lend.");
 }
