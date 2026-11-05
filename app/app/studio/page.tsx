@@ -148,7 +148,7 @@ function Lend() {
         address: flagshipPool,
         abi: poolAbi,
         functionName: "disburseCredit",
-        args: [BigInt(id), (to || address) as `0x${string}`, parseUnits(amount || "0", EURC_DECIMALS)],
+        args: [BigInt(id), (to || address) as `0x${string}`, parseUnits(amount || "0", EURC_DECIMALS), (address) as `0x${string}`],
         chainId: arcTestnet.id,
       });
       setHash(h);

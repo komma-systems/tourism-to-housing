@@ -13,10 +13,10 @@ changing the `adapter` export, no field changes.
 
 | Contract | Address |
 |---|---|
-| TourismImpactPool (ERC-4626) | 0x2acc003d23481717eB6AF9014Fb22368055F3D20 |
-| ImpactCertificate (soulbound) | 0x8d77e19043Ae08f31297B8608D1d037EE1C65696 |
-| HousingCommonsRegistry | 0xbCa2cd74D8C1052a8B31DFBd22A0367e316f206F |
-| ProofOfImpact | 0x83d6CB567C6297a304727B6c1d4010b60Bb6a566 |
+| TourismImpactPool (ERC-4626) | 0x714272F6cB38A74a6A78464406a5b0d5199024Dd |
+| ImpactCertificate (soulbound) | 0xe78C3C1C8FDd6E07107d1d2A6AE113734A0010DA |
+| HousingCommonsRegistry | 0xcB18A2efc62A3Ff4821E319Fec16291908861C28 |
+| ProofOfImpact | 0xD1AA2dfA028a44BC6b145ADF43251B56306972F7 |
 | EURC (Circle testnet) | 0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a |
 
 ## On-chain vs off-chain
@@ -57,17 +57,19 @@ interface Host {
 // A Commons is a cooperative home/land the fund builds and locks off the market.
 interface Commons {
   id: string                 // registry tokenId
-  name: string               // metadata/label (La Balma, Can Batlló, La Morada)
-  ensName?: string           // e.g. labalma.barcelona.retorn.eth
+  name: string               // metadata/label (La 111, Vida Inclusiva, La Corrala)
+  developer: string          // metadata (La Dinamo / Perviure+TEB / Sostre Cívic)
+  ensName?: string           // e.g. la111.barcelona.retorn.eth
   city: string
-  territory: string
+  territory: string          // neighbourhood (Poblenou / Trinitat Nova / Poble-sec)
   geohash: string            // chain
-  homes: number              // chain
+  homesTotal: number         // chain: planned homes in the project (29 / 35 / 8)
+  homesFunded: number        // chain: funded so far (drives the progress bar)
   sqm: number                // chain
   steward: string            // chain: steward address
   stewardName?: string       // metadata
   legalWrapperURI: string    // chain: pointer to the legal wrapper
-  status: 'Registered' | 'Delivered'  // chain
+  status: 'Funding' | 'Delivered'  // chain; WIP projects are Funding
   attestedHomes: number      // chain via ProofOfImpact
   attestedSqm: number        // chain via ProofOfImpact
 }
@@ -97,48 +99,49 @@ interface Adapter {
 
 ## The five surfaces → which methods
 
-1. **Guide** (home): `listHosts()` → cards with star + tagline + returnRate +
-   homesFunded + capitalCommitted, filter by star.
+1. **Guide** (home): `listHosts()` → cards with star + tagline + the hero stat
+   "X of Y homes funded" (progress bar), filter by star. returnRate is a small
+   secondary line, not the headline.
 2. **Stay / operator detail**: `getHost(id)` + each `getCommons(id)` in `fundedCommons`.
 3. **Commons detail**: `getCommons(id)`.
 4. **Ledger** (transparency): `getLedger()`, every contract linked to Arcscan.
 5. **Studio**: `contribute` / `lend` / `attest`; the governor `lend` on the fresh
-   commons (La Morada) is the live-proof moment, after which `listHosts`/`getCommons`
-   reflect the new state.
+   commons (La Corrala, 0 of 8) is the live-proof moment, after which
+   `listHosts`/`getCommons` reflect the new state and its progress bar moves.
 
 ## Mock adapter seed (matches the re-seeded chain state)
 
-Commons are anonymised to neighbourhood level (areas, not named projects) with
-realistic magnitudes. Implemented in `app/lib/adapter.ts`.
+Three real Barcelona co-op projects, all in progress and seeking funds now. Magnitudes
+illustrative; the projects are real. Implemented in `app/lib/adapter.ts`.
 
 ```json
 {
   "hosts": [
     { "id":"0xHOST1","name":"Pensió Cooperativa Gràcia","city":"Barcelona",
-      "territory":"Barcelona","genre":"Cooperative","star":3,"tagline":"Worth the journey",
-      "returnRate":2.5,"homesFunded":20,"capitalCommittedEURC":1400000,
-      "fundedCommons":["1"],"stamps":["Cooperative","Km0"],"photos":[],"story":"" },
-    { "id":"0xHOST2","name":"Hostal del Pont","city":"Barcelona",
-      "territory":"Barcelona","genre":"Boutique","star":2,"tagline":"Worth a detour",
-      "returnRate":3,"homesFunded":28,"capitalCommittedEURC":2100000,
-      "fundedCommons":["2"],"photos":[],"story":"" }
+      "territory":"Gràcia","genre":"Cooperative","star":3,"tagline":"Worth the journey",
+      "returnRate":2.5,"homesFunded":18,"capitalCommittedEURC":1400000,
+      "fundedCommons":["la111"],"stamps":["Cooperative","Km0"],"photos":[],"story":"" },
+    { "id":"0xHOST2","name":"Hostal Trinitat","city":"Barcelona",
+      "territory":"Trinitat Nova","genre":"Boutique","star":2,"tagline":"Worth a detour",
+      "returnRate":2.5,"homesFunded":22,"capitalCommittedEURC":2100000,
+      "fundedCommons":["vidainclusiva"],"photos":[],"story":"" }
   ],
   "commons": [
-    { "id":"1","name":"Poblenou","ensName":"poblenou.barcelona.retorn.eth",
-      "city":"Barcelona","territory":"Barcelona","geohash":"sp3e2x","homes":20,"sqm":1300,
-      "steward":"0xSTEWARD","legalWrapperURI":"coop · cessió d'ús","status":"Delivered",
-      "attestedHomes":20,"attestedSqm":1300 },
-    { "id":"2","name":"Sants","ensName":"sants.barcelona.retorn.eth",
-      "city":"Barcelona","territory":"Barcelona","geohash":"sp3e2p","homes":28,"sqm":1600,
-      "steward":"0xSTEWARD","legalWrapperURI":"coop · cessió d'ús","status":"Delivered",
-      "attestedHomes":28,"attestedSqm":1600 },
-    { "id":"3","name":"Roquetes","ensName":"roquetes.barcelona.retorn.eth",
-      "city":"Barcelona","territory":"Barcelona","geohash":"sp3e2m","homes":0,"sqm":0,
-      "steward":"0xSTEWARD","legalWrapperURI":"coop · cessió d'ús","status":"Registered",
+    { "id":"la111","name":"La 111","developer":"La Dinamo","ensName":"la111.barcelona.retorn.eth",
+      "city":"Barcelona","territory":"Poblenou","geohash":"sp3e2x","homesTotal":29,"homesFunded":18,
+      "sqm":2100,"steward":"0xSTEWARD","legalWrapperURI":"cessió d'ús · surface right","status":"Funding",
+      "attestedHomes":18,"attestedSqm":1300 },
+    { "id":"vidainclusiva","name":"Vida Inclusiva","developer":"Perviure + TEB","ensName":"vidainclusiva.barcelona.retorn.eth",
+      "city":"Barcelona","territory":"Trinitat Nova","geohash":"sp3e2p","homesTotal":35,"homesFunded":22,
+      "sqm":2600,"steward":"0xSTEWARD","legalWrapperURI":"cessió d'ús · 99y surface right","status":"Funding",
+      "attestedHomes":22,"attestedSqm":1600 },
+    { "id":"lacorrala","name":"La Corrala","developer":"Sostre Cívic","ensName":"lacorrala.barcelona.retorn.eth",
+      "city":"Barcelona","territory":"Poble-sec","geohash":"sp3e2m","homesTotal":8,"homesFunded":0,
+      "sqm":600,"steward":"0xSTEWARD","legalWrapperURI":"cessió d'ús · surface right","status":"Funding",
       "attestedHomes":0,"attestedSqm":0 }
   ]
 }
 ```
 
-Roquetes starts empty (status Registered) so the live governor-lend in the demo
+La Corrala starts at 0 of 8 so the live governor-lend in the demo
 fills it and a new stay appears.

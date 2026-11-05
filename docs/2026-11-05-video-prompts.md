@@ -1,5 +1,7 @@
 # Tourism-to-Housing: Midjourney prompt pack
 
+> **Superseded** by `2026-11-06-video-prompts-v2.md` (5 Nov 2026, evening). Kept for reference.
+
 Prompts to generate the papercraft stills for the demo video, one per beat, in a
 single consistent look. Workflow: generate the **master style frame** first, lock the
 look, grab its style reference code, then run every scene prompt with that code so all

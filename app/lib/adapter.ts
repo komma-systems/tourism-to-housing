@@ -74,8 +74,9 @@ export interface Adapter {
   attest(commonsId: string, homes: number, sqm: number): Promise<string>; // steward
 }
 
+// Return is a flat 3% for everyone; the star is proportional to contribution, not the rate.
 export function host(partial: Omit<Host, "tagline" | "returnRate">): Host {
-  return { ...partial, tagline: TAGLINE_BY_STAR[partial.star], returnRate: RETURN_BY_STAR[partial.star] };
+  return { ...partial, tagline: TAGLINE_BY_STAR[partial.star], returnRate: 3 };
 }
 
 // --- Mock data (matches the re-seeded chain state: La Balma + Can Batlló
@@ -197,10 +198,10 @@ export const mockAdapter: Adapter = {
         3: mockHosts.filter((h) => h.star === 3).length,
       },
       contracts: [
-        { label: "TourismImpactPool", address: "0x2acc003d23481717eB6AF9014Fb22368055F3D20", arcscanUrl: "https://testnet.arcscan.app/address/0x2acc003d23481717eB6AF9014Fb22368055F3D20" },
-        { label: "ImpactCertificate", address: "0x8d77e19043Ae08f31297B8608D1d037EE1C65696", arcscanUrl: "https://testnet.arcscan.app/address/0x8d77e19043Ae08f31297B8608D1d037EE1C65696" },
-        { label: "HousingCommonsRegistry", address: "0xbCa2cd74D8C1052a8B31DFBd22A0367e316f206F", arcscanUrl: "https://testnet.arcscan.app/address/0xbCa2cd74D8C1052a8B31DFBd22A0367e316f206F" },
-        { label: "ProofOfImpact", address: "0x83d6CB567C6297a304727B6c1d4010b60Bb6a566", arcscanUrl: "https://testnet.arcscan.app/address/0x83d6CB567C6297a304727B6c1d4010b60Bb6a566" },
+        { label: "TourismImpactPool", address: "0x714272F6cB38A74a6A78464406a5b0d5199024Dd", arcscanUrl: "https://testnet.arcscan.app/address/0x714272F6cB38A74a6A78464406a5b0d5199024Dd" },
+        { label: "ImpactCertificate", address: "0xe78C3C1C8FDd6E07107d1d2A6AE113734A0010DA", arcscanUrl: "https://testnet.arcscan.app/address/0xe78C3C1C8FDd6E07107d1d2A6AE113734A0010DA" },
+        { label: "HousingCommonsRegistry", address: "0xcB18A2efc62A3Ff4821E319Fec16291908861C28", arcscanUrl: "https://testnet.arcscan.app/address/0xcB18A2efc62A3Ff4821E319Fec16291908861C28" },
+        { label: "ProofOfImpact", address: "0xD1AA2dfA028a44BC6b145ADF43251B56306972F7", arcscanUrl: "https://testnet.arcscan.app/address/0xD1AA2dfA028a44BC6b145ADF43251B56306972F7" },
       ],
     };
   },

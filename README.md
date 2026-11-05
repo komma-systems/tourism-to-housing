@@ -43,10 +43,10 @@ return funded by the structure, never by residents.
 
 | Contract | Address | Role |
 |---|---|---|
-| `TourismImpactPool` | `0x2acc003d23481717eB6AF9014Fb22368055F3D20` | ERC-4626 fund: deposits, lending, 2.5% coupon, sets certificate tier |
-| `ImpactCertificate` | `0x8d77e19043Ae08f31297B8608D1d037EE1C65696` | soulbound tiered ★/★★/★★★ credential |
-| `HousingCommonsRegistry` | `0xbCa2cd74D8C1052a8B31DFBd22A0367e316f206F` | ERC-721 per commons: geohash + legal-wrapper pointer |
-| `ProofOfImpact` | `0x83d6CB567C6297a304727B6c1d4010b60Bb6a566` | steward attestations of homes + m² delivered |
+| `TourismImpactPool` | `0x714272F6cB38A74a6A78464406a5b0d5199024Dd` | ERC-4626 fund: deposits, lending, 2.5% coupon, sets certificate tier |
+| `ImpactCertificate` | `0xe78C3C1C8FDd6E07107d1d2A6AE113734A0010DA` | soulbound tiered ★/★★/★★★ credential |
+| `HousingCommonsRegistry` | `0xcB18A2efc62A3Ff4821E319Fec16291908861C28` | ERC-721 per commons: geohash + legal-wrapper pointer |
+| `ProofOfImpact` | `0xD1AA2dfA028a44BC6b145ADF43251B56306972F7` | steward attestations of homes + m² delivered |
 | EURC (Circle) | `0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a` | the euro stablecoin the fund settles in |
 
 ### Frontend

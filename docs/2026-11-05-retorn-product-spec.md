@@ -128,8 +128,10 @@ offstage until one loop actually runs.
 ## Open build actions (for the chain/frontend terminal)
 
 To make the as-built state match these decisions:
-1. **Re-seed La Borda to La Balma** on-chain, so the commons match the Degentrify
-   co-ops (La Balma, Can Batlló).
+1. **Re-seed to three real WIP projects** (all seeking funds now; magnitudes
+   illustrative): La 111 (La Dinamo, Poblenou, 29 homes), Vida Inclusiva (Perviure +
+   TEB, Trinitat Nova, 35 homes), La Corrala (Sostre Cívic, Poble-sec, 8 homes, the
+   fresh one for the live lend). Each needs `homesTotal`/`homesFunded` for a progress bar.
 2. **Switch the frontend rating from Gold/Silver/Copper to the ★/★★/★★★ star** with
    the taglines and the hard number. The contracts already mint the soulbound stars.
 3. **Build the ENS naming** (parent `retorn.eth` → pool `barcelona.retorn.eth` →

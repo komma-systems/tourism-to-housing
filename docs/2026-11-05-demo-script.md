@@ -53,7 +53,7 @@ judging; there, the papercraft shrinks to the hook and the house rising, and the
 spare time goes to the live app.
 
 ### Beat 0: The hook (0:00 to 0:10)
-**On screen:** paper Barcelona street. In post: "Rent +40%", "Wages +4%", "after
+**On screen:** image 1 (Barcelona street in colour), slow zoom. In post: "Rent +40%", "Wages +4%", "after
 inflation, Barcelona, decade to 2023"; then "Wages still buy less than in 2010".
 **Say:** "Over the decade to 2023, after inflation, rents in Barcelona rose about 40%.
 Wages rose about 4%, and they still buy less than they did in 2010. Tourism is one
@@ -67,18 +67,17 @@ years at dOrg I built housing DAO prototypes. This project is where those two pi
 of work meet."
 
 ### Beat 2: The usual way (0:30 to 0:55)
-**On screen:** Ajay in his paper room in Mumbai, two paper paths; he takes the usual
-app; paper flats lift out of the buildings and turn into tourist lets; blank banners
-on the balconies, lettered "Tourists go home" in post.
+**On screen:** image 3 (Ajay in Mumbai, two paths), if made; then back on the street:
+image 1 crossfades into image 2, the colour drains, flats become suitcases,
+"Tourists go home" banners.
 **Say:** "Ajay is booking a trip from Mumbai to Barcelona. The usual way, he rents a
 short-stay flat. That flat used to be someone's home, and there are thousands like
 it. Nobody in this booking means any harm, and it still adds to the pressure pushing
 residents out."
 
 ### Beat 3: The other way, and what we built (0:55 to 1:30)
-**On screen:** the second paper path leads to the La Balma paper house (3 seconds),
-then a hard cut to the live Guide: the star filter, a three-star stay, its funded
-homes.
+**On screen:** straight into the live Guide: the star filter, a three-star stay, its
+funded homes.
 **Say:** "Or he books through Tourism-to-Housing. It's a travel guide where every stay
 is rated by the homes its host has funded, and every rating is backed by money anyone
 can check on-chain. Hosts put capital into a fund that lends to cooperative housing,
@@ -95,7 +94,8 @@ has its own ENS name."
 (Keep the ENS sentence only if ENS names resolve in the app by recording time.)
 
 ### Beat 5: The live proof (1:55 to 2:50) **[the beat to protect]**
-**On screen:** the paper house unfolds upward; hard cut to the Studio: a governor-lend
+**On screen:** image 4 (empty grey plot) crossfades into image 5 (the house has
+risen, colour back); hard cut to the Studio: a governor-lend
 on a fresh commons, wallet confirmation, the transaction on Arcscan with the hash
 readable; the steward attests; the Guide shows the new stay.
 **Say:** "Now a real transaction. I'm lending from the pool to a new housing commons,
@@ -104,20 +104,20 @@ confirms the homes are delivered, and the Guide now shows a stay that didn't exi
 minute ago. Hosts get their capital back with a small return, up to 2.5%."
 
 ### Beat 6: The ask (2:50 to 3:30)
-**On screen:** paper map with Barcelona, Lisbon, Venice, Mykonos and the Balearics;
-end card with the live URL and the repo.
+**On screen:** Clara on camera or image 5 held; end card with the live URL and the
+repo (Meld end-card style).
 **Say:** "We built the machine this weekend. Next week I present it at Degentrify in
 Barcelona, to the co-ops and tenant unions working on exactly this, and we're
 starting in cities where tourism has already pushed people out. We're looking for the
 first hosts and the first pilot city. The hosts' money comes back. What crosses once
 and never comes back is the housing."
 
-### Shots needed (papercraft cut down from seven scenes to five)
+### Shots needed (simple version: 5 images)
 
-From `2026-11-05-video-prompts.md`: Scene 2 (street, used for the hook and Beat 2),
-Scene 1 (the choice), Scene 3 (La Balma house), Scene 6 (house rising), Scene 7
-(map). Scenes 4 (belonging) and 5 (the machine) are dropped from this cut and stay
-available for the Degentrify version.
+Midjourney only (edits in its editor); prompts in `2026-11-06-video-prompts-v2.md`. Images 1 and 2
+(colour drains) and 4 and 5 (house rises) carry the story; image 3 (Ajay in Mumbai) is
+optional. Motion is zooms and crossfades in the editor. The full version (Flow, map,
+courtyard) is in `2026-11-06-video-prompts-full-degentrify.md` for the Degentrify cut.
 
 Minimum viable video if time runs out: Beat 1 on camera plus screen recordings of
 Beats 3 to 5, with the hook figures as a text card.
@@ -149,7 +149,8 @@ If only he knew."
 ### Beat 2: The other way (1:05 to 1:55)
 **On screen:** Ajay books through our platform, seamless, the same ease; the path
 leads to Barcelona, a stay marked with hand-cut stars; the value of his stay knots
-into a standing paper home (La Balma); then the scene opens further, locals welcome
+into a paper home rising in Poblenou (La 111, 18 of 29 homes funded); then the scene
+opens further, locals welcome
 him to a shared table, a community gathering, the dragon at Park Güell, La Pedrera,
 paella among people who live there.
 **Say:** "The other way is just as easy. He books through the guide we are building,
@@ -216,8 +217,10 @@ Clara leads the story and the ask; whoever built the contracts owns the mechanis
 - **"What did you build this weekend?"** All contracts and the frontend fresh this
   weekend (classic from-scratch track); only public libraries reused (OZ, wagmi).
 - **"Is this real or just a hackathon pitch?"** Next week it goes to Degentrify Barcelona,
-  to the actual co-ops and tenant unions. Anchor cases are La Balma and Can Batlló, both
-  real Barcelona cooperatives.
+  to the actual co-ops and tenant unions. The seeded projects are real and in progress,
+  looking for funds now: La Corrala (Sostre Cívic, Poble-sec, 8 homes), La 111 (La Dinamo,
+  Poblenou, 29 homes), Vida Inclusiva (Perviure + TEB, Trinitat Nova, 35 homes). Magnitudes
+  illustrative; the projects are real.
 
 ---
 
@@ -225,7 +228,8 @@ Clara leads the story and the ask; whoever built the contracts owns the mechanis
 
 Mock state today, live Arc reads tomorrow.
 
-1. The Guide: browse + ★/★★/★★★ filter, seeded **La Balma + Can Batlló** (Barcelona).
+1. The Guide: browse + ★/★★/★★★ filter, seeded with the three real WIP projects
+   (La Corrala, La 111, Vida Inclusiva); each card shows "X of Y homes funded".
 2. Operator detail: funded homes, m², soulbound star tier, ENS name.
 3. Commons detail: geohash, steward, legal-wrapper pointer, status.
 4. "Behind the guide" transparency panel: pool balance, credit extended, tiers,
