@@ -6,7 +6,7 @@ import { sepolia } from "viem/chains";
 
 export const ensClient = createPublicClient({
   chain: sepolia,
-  transport: http(),
+  transport: http("https://ethereum-sepolia-rpc.publicnode.com"),
 });
 
 /// Resolve e.g. "poblenou.retorn.eth" or "gracia.retorn.eth" to its address.
