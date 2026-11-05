@@ -1,44 +1,108 @@
 # Tourism-to-Housing Impact Pool
 
 **ETHGlobal Mumbai submission by [KOMMA](https://www.komma.systems/en/tourism-to-housing).**
+A curated guide where travellers book extraordinary places to stay, and a share
+of what they pay flows into a transparent on-chain **fund** that acquires
+permanently affordable housing for the people who live there. Every euro is
+verifiable on Arc.
 
-Bringing tourism value home: funding permanently affordable housing and land commons from the value tourism extracts.
+- **Live:** https://tourism-to-housing.pages.dev
+- **Chain:** Arc testnet (Circle), chainId 5042002, settled in EURC
+- **Explorer:** https://testnet.arcscan.app
 
 ## The problem
 
-Tourism draws enormous value out of the places people visit and leaves the costs behind: rising rents, displaced residents, a social fabric worn thin. In Barcelona, over a decade tourist numbers rose by half while rents climbed 68% and salaries by just 3.4%. The city's hotels clear about €1.5bn in profit a year, while barely 1.2% of housing is social (against roughly 15% across the EU). The gains flow to private operators and global platforms; the costs stay with the community.
+Tourism draws enormous value out of the places people visit and leaves the costs
+behind: rising rents, displaced residents, a social fabric worn thin. In
+Barcelona over a decade tourist numbers rose by half while rents climbed 68% and
+salaries by 3.4%. The capital to buy land and buildings before the speculative
+market does is exactly what non-profit housing cannot reach.
 
-## The mechanism
+## How it works
 
-A transparent on-chain treasury that turns a share of tourism value back into the place it comes from, as housing held in common. The core move is **transvestment** (Dmytri Kleiner and Baruch Gottlieb): value crosses once, out of the system that produced it and into commons that cannot be seized, and the option to pull it back into private hands is closed by design.
+A guide and booking front, backed by a fund:
 
-Two loops run in parallel:
+1. **Operators contribute.** Each featured stay routes a fixed share of revenue
+   into the pool (graded Gold 3.5%, Silver 2.5%, Copper 2%).
+2. **The fund lends.** The pool acts as first-loss capital and lends to local
+   housing commons (cooperatives, community land trusts), unlocking credit at
+   several times its size.
+3. **The homes are locked.** Each funded commons is recorded on-chain with a
+   pointer to its legal wrapper, holding it off the speculative market for good.
+4. **Stewards prove it.** Delivery of homes and square metres is attested
+   on-chain; the guide can show no star the chain does not back.
 
-- **Capital loop.** Operators contribute into a ring-fenced Tourism Impact Pool under multi-year agreements. The pool's first-loss guarantee unlocks credit at several times its own size, lent to cooperative housing and land commons that lock each home out of the speculative market for good.
-- **Reputation loop.** Contributing earns a verified, tiered certificate (★ worth a stay · ★★ worth a detour · ★★★ worth the journey), a star in a credible guide to impact-positive stays. The Michelin move: it makes funding local housing the thing operators compete for.
+The core move is transvestment: value crosses once, out of tourism and into
+commons that cannot be seized. The one-way lock is on the funded homes, not the
+operators' capital, so operators keep their principal plus a concessionary 2.5%
+return funded by the structure, never by residents.
 
-## What is on-chain
+## Architecture
 
-The transparent treasury whose balances, rules and movements anyone can verify:
+### Contracts (Solidity 0.8.24, OpenZeppelin v5), live on Arc testnet
 
-- The **Tourism Impact Pool** contract: holds member contributions, enforces the first-loss guarantee, tracks credit exposure.
-- The **Impact Certificate**: a verified, tiered, non-transferable on-chain credential issued to contributors, revocable, tier set by cumulative contribution.
-- **Proof of impact**: stewards attest homes and square metres delivered; use fees recycle to service the members' return.
+| Contract | Address | Role |
+|---|---|---|
+| `TourismImpactPool` | `0x87cbFE380D9Ec357085d3F2896aBCd273c8f33c4` | ERC-4626 fund: deposits, lending, 2.5% coupon, sets certificate tier |
+| `ImpactCertificate` | `0xC38C5e898cc20F29C27b8fe07E0322337bC42A99` | soulbound tiered ★/★★/★★★ credential |
+| `HousingCommonsRegistry` | `0x8571bda95fd8df81D96BBE018D26dA64Dc2b4756` | ERC-721 per commons: geohash + legal-wrapper pointer |
+| `ProofOfImpact` | `0x409BF2333d5786DEA3652AaeE2265b24c2185F04` | steward attestations of homes + m² delivered |
+| EURC (Circle) | `0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a` | the euro stablecoin the fund settles in |
 
-## Status
+### Frontend
 
-Exploration-stage demonstrator. Anchor case: Barcelona and the Costa Brava, Catalonia. Designed to travel to Venice, Mallorca, Mykonos.
+Next.js (static export) + Tailwind. **The Guide** and **stay detail** sell the
+places; **the Ledger** reads pool value, credit, coupon and the commons registry
+live from Arc in-browser; **the Studio** is the wallet-connected back of house
+(contribute, lend, attest), each a real Arc transaction.
 
-## Team
+## Repository layout
 
-Clara Gromaches (Project Lead), KOMMA.
+```
+contracts/   Solidity, build + deploy + seed + test scripts
+app/         Next.js frontend (Guide, stay detail, Ledger, Studio)
+docs/        architecture design spec
+```
 
-## Links
+## Local development
 
-- Project page: https://www.komma.systems/en/tourism-to-housing
-- Live deployment: _(to add)_
-- Demo video: _(to add)_
+Prerequisites: Node 22+.
+
+```bash
+# Contracts: compile and test
+cd contracts
+npm ci
+npm run compile      # solc (wasm) -> build/
+npm test             # in-memory EVM suite (8 assertions)
+
+# Deploy to Arc testnet (needs contracts/.env with DEPLOYER_PRIVATE_KEY)
+node scripts/deploy-arc.js
+node scripts/seed-arc.js
+
+# App: run and build
+cd ../app
+npm ci
+npm run dev          # http://localhost:3000
+npm run build        # static export -> out/
+```
+
+The app's live contract addresses live in `app/lib/contracts.ts`; the Arc chain
+definition in `app/lib/arc.ts`.
+
+## Testing and CI
+
+- `contracts/npm test` runs the suite in an ephemeral EVM (ganache), covering the
+  soulbound certificate, tiering on deposit, lend/repay with proof-of-impact, and
+  access control. It needs no external services.
+- GitHub Actions (`.github/workflows/ci.yml`) compiles and tests the contracts
+  and builds the app on every push and pull request.
+
+## Open-source lineage
+
+The ERC-4626 fund follows the Octant v2 principal/yield pattern; the housing
+registry follows the GALT Project property-token pattern; the legal-wrapper field
+follows the OtoCo approach. terra0 and MetaLeX informed the framing.
 
 ## Licence
 
-MIT
+MIT.

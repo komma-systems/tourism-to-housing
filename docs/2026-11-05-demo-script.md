@@ -159,3 +159,113 @@ Mock state today, live Arc reads tomorrow.
 - Papercraft scenes per `2026-11-05-visual-direction.md`; capture order follows the beats.
 - Record Beat 4 against the real deployed app.
 - End on the live URL and the ask.
+
+---
+
+## Review (5 Nov, evening): what makes the video winnable, and proposed changes
+
+Status: **proposals only.** The beats above are unchanged. Clara decides which of
+these to adopt, then the beats get rewritten in one pass.
+
+### What a winnable hackathon video does
+
+Judges watch dozens of videos back to back, often at 1.5x speed. The video has to
+make a tired judge understand the problem, believe it works, and remember it, and
+most of that is decided in the first minute.
+
+1. **A hook in the first 10 seconds.** The problem in concrete terms: a street, a
+   rent figure, a person pushed out. Name and team come after.
+2. **One sentence for what we built**, that a judge could repeat to another judge.
+3. **Proof that it works.** The live product with real on-chain transactions,
+   shown early. Animation or slides before any product read as vapourware.
+4. **Sponsor tech visible by name.** Prize judges look for their own tool: name
+   Arc and ENS on screen and show the moment each one does something essential.
+5. **A person behind it.** A short on-camera piece from Clara adds trust and makes
+   it memorable, and it costs little.
+6. **One memorable moment** that a judge recalls later.
+7. **Clean basics.** Clear audio, readable screen text (zoom in), captions, 2 to
+   4 minutes, no music, no sped-up footage.
+
+Common ways to lose: minutes of setup before any demo, architecture before the
+problem, bad audio, and claiming features the demo never shows.
+
+### How the current script scores
+
+| Criterion | Now | Gap |
+|---|---|---|
+| Hook in 10s | Beat 0 opens on "Ajay is booking a trip" | The strongest fact (rents +68%, wages +3.4%) arrives around 0:40 |
+| One-line pitch | Spread across Beat 2 | No single sentence; product name never said |
+| Proof early | First real app at ~1:55 | Nearly two minutes of papercraft before any product |
+| Sponsor tech | Arc named in Beat 3; ENS in one spoken clause | ENS never shown on screen; no captions naming sponsors |
+| Person behind it | Clara's background at 3:20 | Too late; many judges have stopped watching by then |
+| Memorable moment | Beat 4: paper house rises, new stay appears in the Guide | Strong. Keep and make it the centrepiece |
+| Length | 454 spoken words, beats run to 4:00 (Beat 3 and 4 overlap) | At ~140 words a minute plus the transaction wait, this runs over 4:00, which removes us from finalist judging |
+
+### Proposed changes
+
+1. **Open on the fact, then Ajay.** First 10 seconds: paper Barcelona with the
+   rent figure in post, one spoken line with the 68% / 3.4% numbers. Ajay's
+   choice follows. (Check the source and years for those figures before
+   recording; a judge may ask.)
+2. **Add Clara on camera, 15 to 20 seconds, right after the hook.** Who she is
+   and why she is the one building this: years on housing and land commons in
+   Catalonia, five years at dOrg on housing DAO prototypes. Move this up from
+   Beat 5, which then only carries the ask and Degentrify.
+3. **Say the one-line pitch once, plainly, with the name.** Draft:
+   "Retorn is a travel guide where every stay is rated by the homes its host has
+   funded, and every rating is backed by money anyone can check on-chain."
+   Decide the name first: the video currently mixes "Tourism-to-Housing Impact
+   Pool" (submission, repo) and Retorn (product spec). Use one in the video and
+   the submission form.
+4. **Show the real Guide inside Beat 2.** When Ajay "books through the guide",
+   cut to a screen recording of the live Guide: star filter, a stay, its funded
+   homes. That brings the real product forward from 1:55 to about 1:05.
+5. **Trim Beat 1 to about 25 seconds and Beat 2 to about 35.** Keep the image of
+   flats turning into tourist lets; cut the second half of the Beat 2 belonging
+   list (Park Güell, La Pedrera, paella) to one image.
+6. **Thin Beat 3 to one mechanism.** Soulbound, first-loss, credit multiple and
+   steward attestation in 30 seconds is too much to follow by ear. Keep: EURC on
+   Arc, read live, and "the stars cannot be bought". The rest goes to the Q&A,
+   where it is already prepared.
+7. **Make sponsors visible.** Lower-third captions when each appears ("EURC on
+   Arc", "ENS name"). Show an ENS name resolving on screen and the transaction on
+   Arcscan with the hash readable.
+8. **Build Beat 4 as the signature moment.** Paper house rises, hard cut to the
+   real transaction confirming, then the new stay appearing in the Guide. Give it
+   time: this is the beat to protect when cutting elsewhere.
+9. **End on the line that already works.** "What crosses once and never comes
+   back is the housing" is the clearest statement of the idea. Consider closing on
+   it plus the live URL, and shortening the universities and cities list to one clause.
+10. **Target 3:30 and about 380 spoken words.** That leaves margin under 4:00 for
+    the transaction wait and pauses.
+
+### Proposed running order (3:30)
+
+| Time | Beat | On screen |
+|---|---|---|
+| 0:00 to 0:10 | Hook: the rent figure | Paper Barcelona, figure in post |
+| 0:10 to 0:30 | Clara on camera: who, why | Face to camera |
+| 0:30 to 0:55 | The usual way (Ajay) | Papercraft, flats into tourist lets |
+| 0:55 to 1:30 | The other way + one-line pitch | Papercraft, then the live Guide |
+| 1:30 to 1:55 | Behind the stars: EURC on Arc, read live, ENS | Live transparency view, captions |
+| 1:55 to 2:50 | Live proof: lend, attest, new stay appears | Paper house rises, then Arcscan and the Guide |
+| 2:50 to 3:30 | The ask, Degentrify, close line, URL | Paper map, then Clara or end card |
+
+### Production risk (deadline 7 Nov, 09:00 IST)
+
+Seven Midjourney scenes plus animation is a lot alongside the deploy day. Fallback
+in order of priority: (1) Clara on camera plus the screen recording of the live
+app is enough for a complete submission; (2) add the hook scene and the Beat 4
+house-rising scene; (3) the remaining papercraft scenes. The full papercraft cut
+can still be finished for Degentrify (10 to 13 Nov).
+
+For the live finalist demo at the table, the papercraft works as a 30-second
+opener at most; the four minutes there go to the live app.
+
+### Housekeeping
+
+`../../DEMO-SCRIPT.md` (parent folder) is an older script with a different story
+(Siwa, Marrakech, Gold/Silver/Copper grades), and STATUS.md still points to it.
+Proposal: treat this file as the one script and mark the old one superseded. One
+idea worth borrowing from it: it opens on the real Guide, which is the
+product-first instinct the proposals above bring back.
