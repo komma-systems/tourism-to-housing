@@ -30,20 +30,20 @@ contract HousingCommonsRegistry is ERC721, Ownable {
     uint256 public nextId = 1;
     mapping(uint256 => Commons) public commons;
 
-    /// @dev The pool is authorised to move a commons' status (Funded/Delivered);
-    ///      the owner (governor) registers commons. Keeps registration in governance
-    ///      hands while letting the pool reflect lending state.
-    address public pool;
+    /// @dev Authorised pools may move a commons' status (Funded/Delivered); the
+    ///      owner (governor) registers commons. Several pools (one per rate tier)
+    ///      are authorised, so lending from any of them reflects on the registry.
+    mapping(address => bool) public isPool;
 
     event CommonsRegistered(uint256 indexed id, string name, address steward);
     event StatusChanged(uint256 indexed id, Status status);
-    event PoolSet(address pool);
+    event PoolSet(address pool, bool allowed);
 
     constructor(address initialOwner) ERC721("Housing Commons", "COMMONS") Ownable(initialOwner) {}
 
-    function setPool(address _pool) external onlyOwner {
-        pool = _pool;
-        emit PoolSet(_pool);
+    function setPool(address pool, bool allowed) external onlyOwner {
+        isPool[pool] = allowed;
+        emit PoolSet(pool, allowed);
     }
 
     /// @notice Register a housing/land commons. Owner is the pool operator/DAO.
@@ -71,7 +71,7 @@ contract HousingCommonsRegistry is ERC721, Ownable {
     }
 
     function setStatus(uint256 id, Status status) external {
-        require(msg.sender == owner() || msg.sender == pool, "not authorised");
+        require(msg.sender == owner() || isPool[msg.sender], "not authorised");
         require(_ownerOf(id) != address(0), "unknown commons");
         commons[id].status = status;
         emit StatusChanged(id, status);
