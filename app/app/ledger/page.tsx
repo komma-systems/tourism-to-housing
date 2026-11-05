@@ -5,6 +5,7 @@ import { formatUnits } from "viem";
 import { publicClient, explorerAddress } from "@/lib/arc";
 import {
   addresses,
+  flagshipPool,
   poolAbi,
   registryAbi,
   proofAbi,
@@ -49,10 +50,10 @@ export default function LedgerPage() {
     (async () => {
       try {
         const [poolValue, creditExtended, couponBps, poolEurc, nextId] = await Promise.all([
-          publicClient.readContract({ address: addresses.pool, abi: poolAbi, functionName: "totalPoolValue" }),
-          publicClient.readContract({ address: addresses.pool, abi: poolAbi, functionName: "creditExtended" }),
-          publicClient.readContract({ address: addresses.pool, abi: poolAbi, functionName: "couponBps" }),
-          publicClient.readContract({ address: addresses.eurc, abi: erc20Abi, functionName: "balanceOf", args: [addresses.pool] }),
+          publicClient.readContract({ address: flagshipPool, abi: poolAbi, functionName: "totalAssets" }),
+          publicClient.readContract({ address: flagshipPool, abi: poolAbi, functionName: "creditExtended" }),
+          publicClient.readContract({ address: flagshipPool, abi: poolAbi, functionName: "rateBps" }),
+          publicClient.readContract({ address: addresses.eurc, abi: erc20Abi, functionName: "balanceOf", args: [flagshipPool] }),
           publicClient.readContract({ address: addresses.registry, abi: registryAbi, functionName: "nextId" }),
         ]);
 
@@ -188,7 +189,7 @@ export default function LedgerPage() {
         </div>
         <ul className="grid md:grid-cols-2 gap-4">
           {[
-            ["TourismImpactPool", addresses.pool],
+            ["TourismImpactPool", flagshipPool],
             ["ImpactCertificate", addresses.certificate],
             ["HousingCommonsRegistry", addresses.registry],
             ["ProofOfImpact", addresses.proof],

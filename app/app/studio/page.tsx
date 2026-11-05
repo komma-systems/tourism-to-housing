@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { parseUnits } from "viem";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
-import { addresses, poolAbi, registryAbi, proofAbi, erc20Abi, certificateAbi, EURC_DECIMALS } from "@/lib/contracts";
+import { addresses, flagshipPool, poolAbi, registryAbi, proofAbi, erc20Abi, certificateAbi, EURC_DECIMALS } from "@/lib/contracts";
 import { arcTestnet } from "@/lib/arc";
 import { SiteHeader, SiteFooter, Stars } from "@/components/ui";
 import { ConnectButton } from "@/components/wallet";
@@ -81,7 +81,7 @@ function Contribute({ operator }: { operator: string }) {
   const { data: tier, refetch } = useReadContract({
     address: addresses.certificate,
     abi: certificateAbi,
-    functionName: "tierOf",
+    functionName: "starOf",
     args: [operator as `0x${string}`],
   });
 
@@ -94,11 +94,11 @@ function Contribute({ operator }: { operator: string }) {
         address: addresses.eurc,
         abi: erc20Abi,
         functionName: "approve",
-        args: [addresses.pool, value],
+        args: [flagshipPool, value],
         chainId: arcTestnet.id,
       });
       const h = await writeContractAsync({
-        address: addresses.pool,
+        address: flagshipPool,
         abi: poolAbi,
         functionName: "deposit",
         args: [value, operator as `0x${string}`],
@@ -145,7 +145,7 @@ function Lend() {
     setHash(undefined);
     try {
       const h = await writeContractAsync({
-        address: addresses.pool,
+        address: flagshipPool,
         abi: poolAbi,
         functionName: "disburseCredit",
         args: [BigInt(id), (to || address) as `0x${string}`, parseUnits(amount || "0", EURC_DECIMALS)],

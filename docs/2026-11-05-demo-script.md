@@ -43,7 +43,90 @@ can leave a home behind in the place he visits, and get a warmer trip for it.
 
 ---
 
-## 4-minute live demo (and video)
+## Video script v2 (3:30, about 345 spoken words, leaving room for pauses and the transaction wait)
+
+Rewritten 5 Nov 2026 (evening) from the review at the end of this file: data hook
+first, Clara on camera early, the real product on screen by 1:00, one mechanism in
+the explainer, and Beat 5 as the centrepiece. Figures are sourced in
+`../../DATA-SOURCES.md`. The same beats serve the 4-minute live demo at finalist
+judging; there, the papercraft shrinks to the hook and the house rising, and the
+spare time goes to the live app.
+
+### Beat 0: The hook (0:00 to 0:10)
+**On screen:** paper Barcelona street. In post: "Rent +40%", "Wages +4%", "after
+inflation, Barcelona, decade to 2023"; then "Wages still buy less than in 2010".
+**Say:** "Over the decade to 2023, after inflation, rents in Barcelona rose about 40%.
+Wages rose about 4%, and they still buy less than they did in 2010. Tourism is one
+of the reasons."
+
+### Beat 1: Clara on camera (0:10 to 0:30)
+**On screen:** Clara, face to camera, eye level, window light.
+**Say:** "I'm Clara Gromaches. I've worked for years on housing and land commons in
+Catalonia, with co-ops, tenants' organisations and municipalities, and for five
+years at dOrg I built housing DAO prototypes. This project is where those two pieces
+of work meet."
+
+### Beat 2: The usual way (0:30 to 0:55)
+**On screen:** Ajay in his paper room in Mumbai, two paper paths; he takes the usual
+app; paper flats lift out of the buildings and turn into tourist lets; blank banners
+on the balconies, lettered "Tourists go home" in post.
+**Say:** "Ajay is booking a trip from Mumbai to Barcelona. The usual way, he rents a
+short-stay flat. That flat used to be someone's home, and there are thousands like
+it. Nobody in this booking means any harm, and it still adds to the pressure pushing
+residents out."
+
+### Beat 3: The other way, and what we built (0:55 to 1:30)
+**On screen:** the second paper path leads to the La Balma paper house (3 seconds),
+then a hard cut to the live Guide: the star filter, a three-star stay, its funded
+homes.
+**Say:** "Or he books through Tourism-to-Housing. It's a travel guide where every stay
+is rated by the homes its host has funded, and every rating is backed by money anyone
+can check on-chain. Hosts put capital into a fund that lends to cooperative housing,
+homes taken out of the market for good. Ajay pays nothing extra, and his host
+connects him with the people who live there."
+
+### Beat 4: Behind the stars (1:30 to 1:55)
+**On screen:** click from a star to the transparency view. Lower-third captions:
+"EURC on Arc", then "ENS name" as it resolves.
+**Say:** "Behind each star is a fund held in EURC on Arc, Circle's chain for
+stablecoin finance. Everything on this page is read live from the chain. The
+certificate behind the stars can't be bought or transferred, and each pool and home
+has its own ENS name."
+(Keep the ENS sentence only if ENS names resolve in the app by recording time.)
+
+### Beat 5: The live proof (1:55 to 2:50) **[the beat to protect]**
+**On screen:** the paper house unfolds upward; hard cut to the Studio: a governor-lend
+on a fresh commons, wallet confirmation, the transaction on Arcscan with the hash
+readable; the steward attests; the Guide shows the new stay.
+**Say:** "Now a real transaction. I'm lending from the pool to a new housing commons,
+on Arc testnet." (Pause while it confirms.) "There it is on Arcscan. The steward
+confirms the homes are delivered, and the Guide now shows a stay that didn't exist a
+minute ago. Hosts get their capital back with a small return, up to 2.5%."
+
+### Beat 6: The ask (2:50 to 3:30)
+**On screen:** paper map with Barcelona, Lisbon, Venice, Mykonos and the Balearics;
+end card with the live URL and the repo.
+**Say:** "We built the machine this weekend. Next week I present it at Degentrify in
+Barcelona, to the co-ops and tenant unions working on exactly this, and we're
+starting in cities where tourism has already pushed people out. We're looking for the
+first hosts and the first pilot city. The hosts' money comes back. What crosses once
+and never comes back is the housing."
+
+### Shots needed (papercraft cut down from seven scenes to five)
+
+From `2026-11-05-video-prompts.md`: Scene 2 (street, used for the hook and Beat 2),
+Scene 1 (the choice), Scene 3 (La Balma house), Scene 6 (house rising), Scene 7
+(map). Scenes 4 (belonging) and 5 (the machine) are dropped from this cut and stay
+available for the Degentrify version.
+
+Minimum viable video if time runs out: Beat 1 on camera plus screen recordings of
+Beats 3 to 5, with the hook figures as a text card.
+
+---
+
+## Earlier version (4:00, superseded by v2 above)
+
+### 4-minute live demo (and video)
 
 Timing is a target; the live on-chain moment (Beat 4) is the one that must not be cut.
 
@@ -164,8 +247,10 @@ Mock state today, live Arc reads tomorrow.
 
 ## Review (5 Nov, evening): what makes the video winnable, and proposed changes
 
-Status: **proposals only.** The beats above are unchanged. Clara decides which of
-these to adopt, then the beats get rewritten in one pass.
+Status: **adopted 5 Nov** into "Video script v2" above, with an after-inflation
+wages hook (rent about +40%, wages about +4%, wages still below 2010) replacing the
+68% / 3.4% hook. Workings in `../../DATA-SOURCES.md`.
+The name stays Tourism-to-Housing for the hackathon; branding is decided at Degentrify.
 
 ### What a winnable hackathon video does
 

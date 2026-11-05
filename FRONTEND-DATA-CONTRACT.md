@@ -13,10 +13,10 @@ changing the `adapter` export, no field changes.
 
 | Contract | Address |
 |---|---|
-| TourismImpactPool (ERC-4626) | 0x87cbFE380D9Ec357085d3F2896aBCd273c8f33c4 |
-| ImpactCertificate (soulbound) | 0xC38C5e898cc20F29C27b8fe07E0322337bC42A99 |
-| HousingCommonsRegistry | 0x8571bda95fd8df81D96BBE018D26dA64Dc2b4756 |
-| ProofOfImpact | 0x409BF2333d5786DEA3652AaeE2265b24c2185F04 |
+| TourismImpactPool (ERC-4626) | 0x2acc003d23481717eB6AF9014Fb22368055F3D20 |
+| ImpactCertificate (soulbound) | 0x8d77e19043Ae08f31297B8608D1d037EE1C65696 |
+| HousingCommonsRegistry | 0xbCa2cd74D8C1052a8B31DFBd22A0367e316f206F |
+| ProofOfImpact | 0x83d6CB567C6297a304727B6c1d4010b60Bb6a566 |
 | EURC (Circle testnet) | 0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a |
 
 ## On-chain vs off-chain

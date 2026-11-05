@@ -1,5 +1,5 @@
 // Deploy the stack to Arc testnet with ethers (no hardhat compile step).
-// Reads artifacts from build/, the deployer key + EURC address from .env.
+// Three single-rate pools: 2.5% (★★★), 3% (★★), 3.5% (★).
 const fs = require("fs");
 const path = require("path");
 const { ethers } = require("ethers");
@@ -7,15 +7,11 @@ require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
 const ROOT = path.join(__dirname, "..");
 const BUILD = path.join(ROOT, "build");
-
-function art(name) {
-  return JSON.parse(fs.readFileSync(path.join(BUILD, `${name}.json`), "utf8"));
-}
+const art = (name) => JSON.parse(fs.readFileSync(path.join(BUILD, `${name}.json`), "utf8"));
 
 async function deploy(wallet, name, args = []) {
   const { abi, bytecode } = art(name);
-  const factory = new ethers.ContractFactory(abi, bytecode, wallet);
-  const c = await factory.deploy(...args);
+  const c = await new ethers.ContractFactory(abi, bytecode, wallet).deploy(...args);
   await c.waitForDeployment();
   const addr = await c.getAddress();
   console.log(`  ${name}: ${addr}`);
@@ -23,12 +19,10 @@ async function deploy(wallet, name, args = []) {
 }
 
 async function main() {
-  const rpc = process.env.ARC_RPC_URL || "https://rpc.testnet.arc.io";
-  const provider = new ethers.JsonRpcProvider(rpc);
+  const provider = new ethers.JsonRpcProvider(process.env.ARC_RPC_URL || "https://rpc.testnet.arc.io");
   const wallet = new ethers.Wallet(process.env.DEPLOYER_PRIVATE_KEY, provider);
   console.log("Deployer:", wallet.address);
   console.log("Balance :", ethers.formatEther(await provider.getBalance(wallet.address)), "USDC (gas)");
-
   const eurc = process.env.EURC_ADDRESS;
   if (!eurc) throw new Error("EURC_ADDRESS not set");
   console.log("EURC    :", eurc, "\nDeploying...");
@@ -37,21 +31,21 @@ async function main() {
   const certificate = await deploy(wallet, "ImpactCertificate", [wallet.address]);
   const proof = await deploy(wallet, "ProofOfImpact", [await registry.getAddress()]);
 
-  // Tier thresholds in EURC (6 decimals): 25k / 100k / 250k
-  const pool = await deploy(wallet, "TourismImpactPool", [
-    eurc,
-    await certificate.getAddress(),
-    await registry.getAddress(),
-    await proof.getAddress(),
-    wallet.address,
-    25_000_000_000n,
-    100_000_000_000n,
-    250_000_000_000n,
-  ]);
-
-  console.log("Wiring ownership...");
-  await (await certificate.transferOwnership(await pool.getAddress())).wait();
-  await (await registry.setPool(await pool.getAddress())).wait();
+  const tiers = [
+    { key: "star3", rate: 250, star: 3 },
+    { key: "star2", rate: 300, star: 2 },
+    { key: "star1", rate: 350, star: 1 },
+  ];
+  const pools = {};
+  for (const t of tiers) {
+    const p = await deploy(wallet, "TourismImpactPool", [
+      eurc, await certificate.getAddress(), await registry.getAddress(), await proof.getAddress(),
+      wallet.address, t.rate, t.star,
+    ]);
+    pools[t.key] = await p.getAddress();
+    await (await certificate.setMinter(pools[t.key], true)).wait();
+    await (await registry.setPool(pools[t.key], true)).wait();
+  }
 
   const deployed = {
     network: "arcTestnet",
@@ -60,7 +54,7 @@ async function main() {
     registry: await registry.getAddress(),
     certificate: await certificate.getAddress(),
     proof: await proof.getAddress(),
-    pool: await pool.getAddress(),
+    pools, // star3 = 2.5%, star2 = 3%, star1 = 3.5%
     deployer: wallet.address,
   };
   fs.writeFileSync(path.join(ROOT, "deployed.arc.json"), JSON.stringify(deployed, null, 2));

@@ -61,6 +61,16 @@ and attested delivery, so it cannot be bought with marketing (soulbound, revocab
 On the card: **★★★ · Worth the journey · 8 homes funded · €1.4m committed**. The
 tagline carries the desire, the number carries the proof.
 
+**The star measures impact, never the return.** A host earns stars by funding
+verified, steward-attested homes, which is what the traveller cares about and what is
+costly and unfakeable. The concessionary ~2.5% coupon is host-side/capital-stack
+machinery: show it as a small secondary "takes only 2.5%" line for those who dig, not
+the headline. (We rejected ranking by accepted-return: a 2.5 vs 3.5% spread is
+emotionally invisible and can point the opposite way to real impact.) The full
+capital model is bond-like, first-loss tourism pool, yield-funded, tranched; worked
+out in `Projects/Tourism Housing Fund/win-win-mechanism-improvements.md` and
+`2511_Impact Bond for Affordable Housing.md` for the real pilot.
+
 Stamps come off the cards. Keep 3 to 4 genuine, filterable facts on the detail page
 only (Cooperative, Km0, Train-friendly); drop the vague ones.
 
