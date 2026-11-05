@@ -13,16 +13,19 @@ Scored on: technicality, originality, practicality, usability, WOW.
 
 ## The posture (hold this throughout)
 
-This is a demonstrator of a long-term project with a long horizon behind it. It is
-grounded in a real movement (Degentrify Barcelona, 10 to 13 Nov), real Catalan
-cooperatives, and an ongoing research conversation with a European university. It
-also carries real credentials: Clara has spent years on housing and land commons in
-Catalonia (viability research, community incubation and policy work with co-ops,
-municipalities and tenants' organisations), five years at a blockchain-native
-startup (dOrg, 2021 to 2026) building community housing DAO prototypes, and now runs
-the Tourism × Housing pilot this demo brings to life (claragromaches.com). The
-person presenting has worked in all three worlds this joins: tourism, housing
-commons, and blockchain. Present it with that weight.
+This is a demonstrator of a long-term pilot. Its credibility is rooted in Clara's
+own experience across the three worlds this project joins (claragromaches.com): the
+tourism industry, housing and land commons, and blockchain. Years on housing and
+land commons in Catalonia (viability research, community incubation and policy work
+with co-ops, municipalities and tenants' organisations), five years at a
+blockchain-native startup (dOrg, 2021 to 2026) building community housing DAO
+prototypes, and the Tourism × Housing pilot this demo brings to life.
+
+Momentum behind it: next week the project is presented at Degentrify Barcelona (10
+to 13 Nov), a conference in Barcelona, in front of potential partners to push the
+pilot forward; conversations with several universities are ongoing; and the pilot
+targets highly touristified cities where tourism has displaced residents, Barcelona,
+Lisbon, Venice, Mykonos and the like. Present it with that weight.
 
 ## The spine (one sentence each)
 
@@ -90,12 +93,12 @@ redeemable. What crosses once and never comes back is the housing."
 ### Beat 5 — The ask and the horizon (3:20–4:00)
 **On screen:** a paper map, Barcelona, Lisbon, Venice, Mykonos, and the Balearics
 (Mallorca, Ibiza).
-**Say:** "We proved the machine this weekend, but this is not a weekend project. Next
-week I present it in Barcelona at Degentrify, to the cooperatives and tenant unions
-building the real thing, Sostre Civic, Can Batlló, La Morada. We are starting where
-tourism has already pushed residents out, Barcelona, Lisbon, Venice, Mykonos, Mallorca,
-Ibiza, and we are in conversation with a European university on the research behind it.
-It is live, it is open source, anyone can verify it. We are looking for the first
+**Say:** "We proved the machine this weekend. This is a pilot with a long horizon.
+Next week I present it in Barcelona at Degentrify, in front of potential partners to
+push it forward, the cooperatives and tenant unions working on exactly this. We are
+starting where tourism has already pushed residents out, Barcelona, Lisbon, Venice,
+Mykonos, and we are in conversation with several universities on the research behind
+it. It is live, it is open source, anyone can verify it. We are looking for the first
 operators and the first pilot city. This is how we bring tourism value home."
 
 ---

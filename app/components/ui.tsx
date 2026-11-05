@@ -61,7 +61,7 @@ export function SiteHeader() {
         <nav className="flex gap-6 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-ink-soft">
           <Link href="/" className="hover:text-ink">Stays</Link>
           <Link href="/ledger" className="hover:text-ink">Ledger</Link>
-          <Link href="/join" className="hover:text-ink">Join</Link>
+          <Link href="/studio" className="hover:text-ink">Studio</Link>
         </nav>
       </div>
     </header>
