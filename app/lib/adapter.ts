@@ -90,7 +90,7 @@ const mockCommons: Commons[] = [
   {
     id: "1",
     name: "Poblenou",
-    ensName: "poblenou.barcelona.retorn.eth",
+    ensName: "poblenou.retorn.eth",
     city: "Barcelona",
     territory: "Barcelona",
     geohash: "sp3e2x",
@@ -106,7 +106,7 @@ const mockCommons: Commons[] = [
   {
     id: "2",
     name: "Sants",
-    ensName: "sants.barcelona.retorn.eth",
+    ensName: "sants.retorn.eth",
     city: "Barcelona",
     territory: "Barcelona",
     geohash: "sp3e2p",
@@ -122,7 +122,7 @@ const mockCommons: Commons[] = [
   {
     id: "3",
     name: "Roquetes",
-    ensName: "roquetes.barcelona.retorn.eth",
+    ensName: "roquetes.retorn.eth",
     city: "Barcelona",
     territory: "Barcelona",
     geohash: "sp3e2m",
@@ -141,7 +141,7 @@ const mockHosts: Host[] = [
   host({
     id: "0xHOST1",
     name: "Pensió Cooperativa Gràcia",
-    ensName: "gracia.barcelona.retorn.eth",
+    ensName: "gracia.retorn.eth",
     city: "Barcelona",
     territory: "Barcelona",
     genre: "Cooperative",
@@ -156,7 +156,7 @@ const mockHosts: Host[] = [
   host({
     id: "0xHOST2",
     name: "Hostal del Pont",
-    ensName: "hostaldelpont.barcelona.retorn.eth",
+    ensName: "hostaldelpont.retorn.eth",
     city: "Barcelona",
     territory: "Barcelona",
     genre: "Boutique",

@@ -22,7 +22,7 @@ export const HOST_METADATA: HostMeta[] = [
   {
     id: "0x87ecf29ae7655244d728c9d48832e331ffe596b3",
     name: "Pensió Cooperativa Gràcia",
-    ensName: "gracia.barcelona.retorn.eth",
+    ensName: "gracia.retorn.eth",
     city: "Barcelona",
     territory: "Barcelona",
     genre: "Cooperative",

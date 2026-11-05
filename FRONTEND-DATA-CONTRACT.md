@@ -38,7 +38,7 @@ type Tagline = 'Worth a stay' | 'Worth a detour' | 'Worth the journey'
 interface Host {
   id: string                 // operator address
   name: string               // metadata
-  ensName?: string           // ENS, e.g. host.barcelona.retorn.eth
+  ensName?: string           // ENS, e.g. host.retorn.eth
   city: string               // metadata (flagship: Barcelona)
   territory: string          // metadata
   genre: string              // metadata: Outliers / boutique / cooperative / foundation
@@ -59,7 +59,7 @@ interface Commons {
   id: string                 // registry tokenId
   name: string               // metadata/label (La 111, Vida Inclusiva, La Corrala)
   developer: string          // metadata (La Dinamo / Perviure+TEB / Sostre Cívic)
-  ensName?: string           // e.g. la111.barcelona.retorn.eth
+  ensName?: string           // e.g. la111.retorn.eth
   city: string
   territory: string          // neighbourhood (Poblenou / Trinitat Nova / Poble-sec)
   geohash: string            // chain
@@ -85,11 +85,27 @@ interface Ledger {
   contracts: { label: string; address: string; arcscanUrl: string }[]
 }
 
+// The passport: membership points earned by staying, unlocking non-transactional
+// hospitality. MOCK-BACKED for the demo (no contract). On-chain is an optional stretch.
+interface Passport {
+  stays: number                  // count of stays booked (mock increments on book)
+  stamps: { stayId: string; project: string; date: string }[]
+  unlocks: Unlock[]
+}
+interface Unlock {
+  id: string                     // 'community-dinner'
+  label: string                  // 'Community dinner in Poblenou'
+  requiredStays: number          // 1 for the demo
+  unlocked: boolean              // derived: stays >= requiredStays
+}
+
 interface Adapter {
   listHosts(): Promise<Host[]>            // Guide
   getHost(id: string): Promise<Host>      // Stay / operator detail
   getCommons(id: string): Promise<Commons>// Commons detail
   getLedger(): Promise<Ledger>            // Transparency
+  getPassport(): Promise<Passport>        // My passport
+  book(hostId: string): Promise<Passport> // mock: adds a stamp, recomputes unlocks
   // Studio (write, wallet-connected): each returns a tx hash
   contribute(amountEURC: number): Promise<string>
   lend(commonsId: string, amountEURC: number): Promise<string>  // governor
@@ -108,6 +124,12 @@ interface Adapter {
 5. **Studio**: `contribute` / `lend` / `attest`; the governor `lend` on the fresh
    commons (La Corrala, 0 of 8) is the live-proof moment, after which
    `listHosts`/`getCommons` reflect the new state and its progress bar moves.
+6. **My passport**: `getPassport()` shows stays, stamps, and the one unlock locked;
+   `book(hostId)` adds a stamp and flips "Community dinner in Poblenou" to unlocked.
+   This is the belonging payoff of demo Beat 2 made clickable (mock-backed, no contract).
+
+Passport starts empty (0 stays, dinner locked). Booking once in the demo stamps it
+and unlocks the dinner, the second visible loop alongside the on-chain home funding.
 
 ## Mock adapter seed (matches the re-seeded chain state)
 
@@ -127,15 +149,15 @@ illustrative; the projects are real. Implemented in `app/lib/adapter.ts`.
       "fundedCommons":["vidainclusiva"],"photos":[],"story":"" }
   ],
   "commons": [
-    { "id":"la111","name":"La 111","developer":"La Dinamo","ensName":"la111.barcelona.retorn.eth",
+    { "id":"la111","name":"La 111","developer":"La Dinamo","ensName":"la111.retorn.eth",
       "city":"Barcelona","territory":"Poblenou","geohash":"sp3e2x","homesTotal":29,"homesFunded":18,
       "sqm":2100,"steward":"0xSTEWARD","legalWrapperURI":"cessió d'ús · surface right","status":"Funding",
       "attestedHomes":18,"attestedSqm":1300 },
-    { "id":"vidainclusiva","name":"Vida Inclusiva","developer":"Perviure + TEB","ensName":"vidainclusiva.barcelona.retorn.eth",
+    { "id":"vidainclusiva","name":"Vida Inclusiva","developer":"Perviure + TEB","ensName":"vidainclusiva.retorn.eth",
       "city":"Barcelona","territory":"Trinitat Nova","geohash":"sp3e2p","homesTotal":35,"homesFunded":22,
       "sqm":2600,"steward":"0xSTEWARD","legalWrapperURI":"cessió d'ús · 99y surface right","status":"Funding",
       "attestedHomes":22,"attestedSqm":1600 },
-    { "id":"lacorrala","name":"La Corrala","developer":"Sostre Cívic","ensName":"lacorrala.barcelona.retorn.eth",
+    { "id":"lacorrala","name":"La Corrala","developer":"Sostre Cívic","ensName":"lacorrala.retorn.eth",
       "city":"Barcelona","territory":"Poble-sec","geohash":"sp3e2m","homesTotal":8,"homesFunded":0,
       "sqm":600,"steward":"0xSTEWARD","legalWrapperURI":"cessió d'ús · surface right","status":"Funding",
       "attestedHomes":0,"attestedSqm":0 }
