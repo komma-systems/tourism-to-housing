@@ -45,10 +45,10 @@ interface Host {
   photos: string[]           // metadata
   story: string              // metadata
   pricePerNight?: number     // metadata
-  star: Star                 // chain: ImpactCertificate.tierOf(operator)
+  star: Star                 // chain: tier from impact (homes delivered) [tech]
   tagline: Tagline           // derived from star
-  returnRate: 2.5 | 3 | 3.5  // chain: accepted-return band (★★★=2.5, ★★=3, ★=3.5)
-  homesFunded: number        // chain: sum of delivered homes in funded commons
+  homesFunded: number        // chain: sum of delivered homes in funded commons (drives star)
+  returnRate: number         // chain: concessionary coupon ~2.5%, SECONDARY, not the star
   capitalCommittedEURC: number // chain: operator position in the pool
   fundedCommons: string[]    // chain: commons ids this host has funded
   stamps?: string[]          // metadata, detail page only: Cooperative, Km0, Train-friendly
@@ -76,7 +76,7 @@ interface Commons {
 interface Ledger {
   poolValueEURC: number          // TourismImpactPool.totalPoolValue()
   creditExtendedEURC: number     // TourismImpactPool.creditExtended()
-  returnRateByTier: { 3: 2.5; 2: 3; 1: 3.5 }
+  returnRate: number             // flat concessionary coupon, ~2.5% (secondary)
   commonsCount: number
   homesInCommonsTotal: number
   tierDistribution: { 1: number; 2: number; 3: number }
@@ -108,34 +108,37 @@ interface Adapter {
 
 ## Mock adapter seed (matches the re-seeded chain state)
 
+Commons are anonymised to neighbourhood level (areas, not named projects) with
+realistic magnitudes. Implemented in `app/lib/adapter.ts`.
+
 ```json
 {
   "hosts": [
     { "id":"0xHOST1","name":"Pensió Cooperativa Gràcia","city":"Barcelona",
       "territory":"Barcelona","genre":"Cooperative","star":3,"tagline":"Worth the journey",
-      "returnRate":2.5,"homesFunded":28,"capitalCommittedEURC":1400000,
-      "fundedCommons":["labalma"],"stamps":["Cooperative","Km0"],"photos":[],"story":"" },
+      "returnRate":2.5,"homesFunded":20,"capitalCommittedEURC":1400000,
+      "fundedCommons":["1"],"stamps":["Cooperative","Km0"],"photos":[],"story":"" },
     { "id":"0xHOST2","name":"Hostal del Pont","city":"Barcelona",
       "territory":"Barcelona","genre":"Boutique","star":2,"tagline":"Worth a detour",
-      "returnRate":3,"homesFunded":12,"capitalCommittedEURC":600000,
-      "fundedCommons":["canbatllo"],"photos":[],"story":"" }
+      "returnRate":3,"homesFunded":28,"capitalCommittedEURC":2100000,
+      "fundedCommons":["2"],"photos":[],"story":"" }
   ],
   "commons": [
-    { "id":"labalma","name":"La Balma","ensName":"labalma.barcelona.retorn.eth",
-      "city":"Barcelona","territory":"Barcelona","geohash":"sp3e","homes":28,"sqm":2100,
-      "steward":"0xSTEWARD1","legalWrapperURI":"ipfs://...","status":"Delivered",
-      "attestedHomes":28,"attestedSqm":2100 },
-    { "id":"canbatllo","name":"Can Batlló","ensName":"canbatllo.barcelona.retorn.eth",
-      "city":"Barcelona","territory":"Barcelona","geohash":"sp3d","homes":12,"sqm":900,
-      "steward":"0xSTEWARD2","legalWrapperURI":"ipfs://...","status":"Delivered",
-      "attestedHomes":12,"attestedSqm":900 },
-    { "id":"lamorada","name":"La Morada","ensName":"lamorada.barcelona.retorn.eth",
-      "city":"Barcelona","territory":"Barcelona","geohash":"sp3f","homes":0,"sqm":0,
-      "steward":"0xSTEWARD3","legalWrapperURI":"ipfs://...","status":"Registered",
+    { "id":"1","name":"Poblenou","ensName":"poblenou.barcelona.retorn.eth",
+      "city":"Barcelona","territory":"Barcelona","geohash":"sp3e2x","homes":20,"sqm":1300,
+      "steward":"0xSTEWARD","legalWrapperURI":"coop · cessió d'ús","status":"Delivered",
+      "attestedHomes":20,"attestedSqm":1300 },
+    { "id":"2","name":"Sants","ensName":"sants.barcelona.retorn.eth",
+      "city":"Barcelona","territory":"Barcelona","geohash":"sp3e2p","homes":28,"sqm":1600,
+      "steward":"0xSTEWARD","legalWrapperURI":"coop · cessió d'ús","status":"Delivered",
+      "attestedHomes":28,"attestedSqm":1600 },
+    { "id":"3","name":"Roquetes","ensName":"roquetes.barcelona.retorn.eth",
+      "city":"Barcelona","territory":"Barcelona","geohash":"sp3e2m","homes":0,"sqm":0,
+      "steward":"0xSTEWARD","legalWrapperURI":"coop · cessió d'ús","status":"Registered",
       "attestedHomes":0,"attestedSqm":0 }
   ]
 }
 ```
 
-La Morada starts empty (status Registered) so the live governor-lend in the demo
+Roquetes starts empty (status Registered) so the live governor-lend in the demo
 fills it and a new stay appears.
