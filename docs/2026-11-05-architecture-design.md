@@ -6,9 +6,18 @@ Deadline Saturday 7 November 09:00 IST.
 
 ## What we're proving
 
-A transparent on-chain treasury that turns tourism value into permanently
-affordable housing. Two loops (capital and reputation) plus a proof step, all
+A curated guide and booking platform where travellers choose where to stay by its
+verified local-housing impact, backed by a transparent on-chain treasury that
+turns tourism value into permanently affordable housing. The guide is the front
+door (Michelin-style ★/★★/★★★ = the on-chain Impact Certificate); the fund is the
+machinery behind it. Two loops (capital and reputation) plus a proof step, all
 readable on-chain so "anyone can verify" is literally true.
+
+## Narrative (the video arc)
+
+Open as a traveller who wants a stay that helps the local housing crisis → browse
+the guide → pick a ★★★ operator → see the verified homes their guests funded →
+pull back the curtain to the on-chain machinery that makes the stars unfakeable.
 
 ## The transvestment reading (resolved)
 
@@ -35,13 +44,16 @@ transvestment is enforced on the registry side.
   commons to Delivered and lets the pool recycle use fees.
 
 ### Frontend (Next.js + wagmi/viem + RainbowKit)
-Four surfaces on one app:
-1. **Contribute** (operator) — deposit EURC, see certificate tier update.
-2. **Lend** (governor) — register a commons, disburse credit.
-3. **Attest** (steward) — record homes/m² delivered.
-4. **Transparency dashboard** (public) — pool balance, credit extended,
-   certificate tiers, attested impact, all read live from chain. This is the WOW
-   and the required live-deployment link.
+Guide-first. Surfaces on one app:
+1. **The Guide** (traveller, public — the live link and WOW) — browse
+   impact-rated stays, filter by ★/★★/★★★, each listing shows the homes and m² its
+   guests helped fund, every star verified on-chain. Seeded with delivered commons.
+2. **Contribute** (operator) — deposit EURC, watch certificate stars rise.
+3. **Lend** (governor) — register a commons and disburse credit; run live in the demo.
+4. **Attest** (steward) — record homes/m² delivered.
+5. **Behind the guide** (transparency) — raw pool balance, credit extended,
+   certificate tiers and attested impact read live from chain; one click from the
+   guide, so "how the stars are verified" is always visible.
 
 ## Data flow
 
@@ -78,7 +90,11 @@ Hardhat tests cover the capital + reputation + proof flows (soulbound transfer
 blocked, tiering on deposit, lend/repay with proof-of-impact). Compile verified
 via the npm wasm solc (`scripts/compile-check.js`).
 
+## Seeding (resolved)
+Seed one or two already-delivered commons (La Borda, Can Batlló in Barcelona) so
+the guide is populated and believable from the first second. During the demo, run
+one governor-lend live on a fresh commons so judges watch the mechanism execute
+on-chain. Seeded history makes the guide real; the live lend proves it is not mocked.
+
 ## Open (decide while building)
 - Coupon mechanics for the demo: show a modeled coupon, or keep it illustrative?
-- Whether to show the governor-lend step at all, or jump straight to a seeded
-  "already funded" commons to keep the demo tight.
