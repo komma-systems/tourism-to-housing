@@ -18,7 +18,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm ci
+      # npm install (not ci): the lockfile pins macOS-only fsevents, which npm ci
+      # rejects on Linux runners.
+      - run: npm install --no-audit --no-fund
       - name: Compile (solc wasm)
         run: npm run compile
       - name: Test (in-memory EVM)
