@@ -51,3 +51,25 @@ through ENS.
 3. Set each name's address + `impact.*` text records from the Arc state.
 4. Verify `resolveName("poblenou.retorn.eth")` returns the expected address in the
    UI; show the name + records on the Guide/Ledger.
+
+## Status: live (6 November 2026)
+
+- `retorn.eth` registered on **ENSv2 Sepolia** via the ETHRegistrar
+  (`0xf633e7fc17e2bbe0d0965d18ec1821dcb754a3d3`), commit-reveal, rent paid in
+  MockUSDC. Tx `0x8b00f9f19eccb066250f4ad27eb76d0aa69e8678951cf634172f964ae584f2ef`.
+  Owner: deployer. Expires November 2027.
+- Resolver: **RetornResolver** `0x18CaAC9dF077C0Ce89B41F12a6E5d0D3C00C7EcD`
+  (ENSIP-10 wildcard, so all subnames resolve through it without a subregistry).
+- Records synced from Arc in one batch by `contracts/scripts/ens-sync-records.js`
+  (tx `0x30981c86f0a5487eafe8770049410f836663523f085f04dfae2676ccb6d6b1f2`).
+  Re-run it after any change on Arc to keep the names current.
+- Verified through the ENSv2 Universal Resolver
+  (`0xeEeEEEeE14D718C2B47D9923Deab1335E144EeEe`) with viem:
+
+| Name | Resolves to | Example records |
+|---|---|---|
+| retorn.eth | Arc pool | impact.rate 3%, impact.value |
+| gracia.retorn.eth | host address | impact.star 3, impact.homes 60 |
+| poblenou.retorn.eth | commons registry | impact.homes 20, Delivered |
+| sants.retorn.eth | commons registry | impact.homes 28, Delivered |
+| roquetes.retorn.eth | commons registry | impact.homes 12, Delivered |

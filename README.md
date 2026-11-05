@@ -106,3 +106,13 @@ follows the OtoCo approach. terra0 and MetaLeX informed the framing.
 ## Licence
 
 MIT.
+
+## ENS (ENSv2 on Sepolia)
+
+`retorn.eth` is registered on ENSv2 Sepolia. A wildcard resolver
+(`RetornResolver`, ENSIP-10) answers for every name under it, with records synced
+from the live fund state on Arc: `retorn.eth` (the fund), `gracia.retorn.eth` (a
+host, with its star and homes funded) and `poblenou.retorn.eth`,
+`sants.retorn.eth`, `roquetes.retorn.eth` (the housing commons). Names resolve
+through the ENSv2 Universal Resolver, so any ENS-aware client reads them. Details
+and transaction hashes in `docs/ENS-PLAN.md`.
