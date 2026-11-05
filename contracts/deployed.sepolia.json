@@ -1,0 +1,8 @@
+{
+  "network": "sepolia",
+  "ens": "ENSv2",
+  "name": "retorn.eth",
+  "resolver": "0x18CaAC9dF077C0Ce89B41F12a6E5d0D3C00C7EcD",
+  "registerTx": "0x8b00f9f19eccb066250f4ad27eb76d0aa69e8678951cf634172f964ae584f2ef",
+  "owner": "0x87EcF29aE7655244D728C9D48832E331fFE596B3"
+}

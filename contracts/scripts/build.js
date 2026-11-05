@@ -8,7 +8,7 @@ const ROOT = path.join(__dirname, "..");
 const CONTRACTS = path.join(ROOT, "contracts");
 const OUT = path.join(ROOT, "build");
 
-const names = ["HousingCommonsRegistry", "ImpactCertificate", "ProofOfImpact", "TourismImpactPool", "MockEURC"];
+const names = ["HousingCommonsRegistry", "ImpactCertificate", "ProofOfImpact", "TourismImpactPool", "MockEURC", "RetornResolver"];
 const sources = {};
 for (const n of names) sources[`contracts/${n}.sol`] = { content: fs.readFileSync(path.join(CONTRACTS, `${n}.sol`), "utf8") };
 
