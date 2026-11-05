@@ -13,24 +13,30 @@ Scored on: technicality, originality, practicality, usability, WOW.
 
 ## The posture (hold this throughout)
 
-This is a demonstrator of a long-term project, not a weekend toy. It is grounded in
-a real movement (Degentrify Barcelona, 10 to 13 Nov), real cooperatives, and an
-ongoing research conversation with a European university. Present it with that
-weight.
+This is a demonstrator of a long-term project with a long horizon behind it. It is
+grounded in a real movement (Degentrify Barcelona, 10 to 13 Nov), real Catalan
+cooperatives, and an ongoing research conversation with a European university. It
+also carries real credentials: Clara has spent years on housing and land commons in
+Catalonia (viability research, community incubation and policy work with co-ops,
+municipalities and tenants' organisations), five years at a blockchain-native
+startup (dOrg, 2021 to 2026) building community housing DAO prototypes, and now runs
+the Tourism × Housing pilot this demo brings to life (claragromaches.com). The
+person presenting has worked in all three worlds this joins: tourism, housing
+commons, and blockchain. Present it with that weight.
 
 ## The spine (one sentence each)
 
 - **Problem:** tourism pulls value out of a place and leaves the housing costs behind.
 - **Mechanism:** a transparent on-chain treasury turns a share of that value into housing held in common, locked out of the market for good.
-- **Proof:** the stars Meera chose are backed by real on-chain money and verified humans, so "anyone can verify" is literally true.
+- **Proof:** the stars Ajay chose are backed by real on-chain money and verified humans, so "anyone can verify" is literally true.
 - **Ask:** the first operators and the first pilot city, to take this from demonstrator to live pool.
 
 ## The protagonist
 
-Meera saved for two years for this trip. She flies from Mumbai to Barcelona for the
-holiday she has wanted for a long time. She does nothing unusual: she books a place
+Ajay saved for two years for this trip. He flies from Mumbai to Barcelona for the
+holiday he has wanted for a long time. He does nothing unusual: he books a place
 to stay, sees the city, eats well. The whole point is that an ordinary tourist,
-giving up nothing, leaves a home behind in the place she visited.
+giving up nothing, leaves a home behind in the place he visited.
 
 ---
 
@@ -39,28 +45,28 @@ giving up nothing, leaves a home behind in the place she visited.
 Timing is a target; the live on-chain moment (Beat 4) is the one that must not be cut.
 
 ### Beat 0 — The booking (0:00–0:30)
-**On screen:** Meera in paper Mumbai, booking Barcelona on the Guide; she picks a
+**On screen:** Ajay in paper Mumbai, booking Barcelona on the Guide; he picks a
 place to stay and it carries three hand-cut paper stars.
-**Say:** "Meera saved two years for this trip. She books a place to stay in
-Barcelona. It has three stars, and she barely notices why. All she wants is a good
+**Say:** "Ajay saved two years for this trip. He books a place to stay in
+Barcelona. It has three stars, and he barely notices why. All he wants is a good
 holiday."
 
 ### Beat 1 — Barcelona in paper (0:30–1:15)
-**On screen:** the paper city rises around her, the mosaic dragon at Park Güell, the
+**On screen:** the paper city rises around him, the mosaic dragon at Park Güell, the
 wave-stone of La Pedrera, the Sagrada Família, a paper plate of paella.
-**Say:** "She does what everyone does. The dragon at Park Güell, the stone waves of
+**Say:** "He does what everyone does. The dragon at Park Güell, the stone waves of
 La Pedrera, the Sagrada Família, a plate of paella in the sun. A completely ordinary,
-lovely trip. In the city she is enjoying, rents have climbed 68% in a decade while
-salaries rose 3.4%, and residents are being pushed out of the neighbourhoods she is
+lovely trip. In the city he is enjoying, rents have climbed 68% in a decade while
+salaries rose 3.4%, and residents are being pushed out of the neighbourhoods he is
 walking through."
 
 ### Beat 2 — The quiet twist (1:15–1:50)
-**On screen:** while she wanders, a thread is drawn from her stay across the city and
+**On screen:** while he wanders, a thread is drawn from his stay across the city and
 knotted into a standing paper home (La Balma); a small paper steward beside it.
-**Say:** "Here is what her stars meant. While Meera ate and wandered, the value of
-her stay was pulled as a single thread and knotted, on the other side of the same
+**Say:** "Here is what his stars meant. While Ajay ate and wandered, the value of
+his stay was pulled as a single thread and knotted, on the other side of the same
 city, into a real cooperative home that can never be sold back into the market. The
-one-way lock is on the house. She gave up nothing, and a family stays."
+one-way lock is on the house. He gave up nothing, and a family stays."
 
 ### Beat 3 — Pull back the curtain (1:50–2:20)
 **On screen:** the paper set lifts to reveal the machine underneath: a paper treasury

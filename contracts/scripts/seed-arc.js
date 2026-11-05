@@ -46,14 +46,23 @@ async function main() {
     console.log("registry already seeded (nextId =", next.toString(), ")");
   }
 
-  // Optional EURC contribution so a certificate tier shows, only if we hold EURC.
+  // Testnet-sized tier thresholds so a faucet-sized contribution earns a star:
+  // 2 / 5 / 10 EURC for ★ / ★★ / ★★★. (Owner-only; no redeploy needed.)
+  await (await pool.setThresholds(2_000_000n, 5_000_000n, 10_000_000n)).wait();
+  console.log("thresholds set to 2 / 5 / 10 EURC");
+
+  // Contribution so a certificate tier shows, only if we hold EURC.
   const bal = await eurc.balanceOf(me);
   console.log("deployer EURC balance:", ethers.formatUnits(bal, 6));
-  if (bal > 0n) {
-    const amount = bal < 120_000_000_000n ? bal : 120_000_000_000n; // up to 120k EURC -> tier 2
+  if (bal >= 15_000_000n) {
+    const amount = 15_000_000n; // 15 EURC -> ★★★, leaves some for a live lend/contribution
     await (await eurc.approve(d.pool, amount)).wait();
     await (await pool.deposit(amount, me)).wait();
-    console.log("deposited EURC:", ethers.formatUnits(amount, 6), "→ certificate tier set");
+    console.log("deposited 15 EURC → ★★★ certificate tier set");
+  } else if (bal > 0n) {
+    await (await eurc.approve(d.pool, bal)).wait();
+    await (await pool.deposit(bal, me)).wait();
+    console.log("deposited", ethers.formatUnits(bal, 6), "EURC → certificate tier set");
   } else {
     console.log("no EURC held; skipping contribution. Fund at faucet.circle.com then re-run.");
   }
