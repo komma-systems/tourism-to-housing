@@ -31,6 +31,13 @@ contract TourismImpactPool is ERC4626, Ownable {
     uint256 public tier2Threshold;
     uint256 public tier3Threshold;
 
+    /// @dev Operator coupon in basis points (250 = 2.5%). Sits just above the
+    ///      Spanish 1-year deposit average (~1.9%) and matches the best retail
+    ///      deposits: attractive but clearly concessionary. Funded from pool yield,
+    ///      never from residents' use fees: the capital earns, residents pay only an
+    ///      affordable fee. Shown to operators as their modest return on principal.
+    uint16 public couponBps = 250;
+
     /// @dev EURC currently lent out against commons (credit extended).
     uint256 public creditExtended;
     mapping(uint256 => uint256) public loanOf; // commonsId => principal outstanding
