@@ -9,3 +9,7 @@ out/
 cache/
 artifacts/
 typechain-types/
+contracts/node_modules/
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
