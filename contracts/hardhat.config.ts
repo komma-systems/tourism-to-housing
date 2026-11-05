@@ -13,9 +13,11 @@ const config: HardhatUserConfig = {
     },
   },
   networks: {
-    // Arc (Circle) testnet — anchor chain, EURC-native. Set ARC_RPC_URL.
+    // Arc (Circle) testnet — anchor chain. Gas is paid in testnet USDC
+    // (faucet.circle.com). Chain ID 5042002. Override the RPC with ARC_RPC_URL.
     arcTestnet: {
-      url: process.env.ARC_RPC_URL ?? "",
+      url: process.env.ARC_RPC_URL ?? "https://rpc.testnet.arc.io",
+      chainId: 5042002,
       accounts: DEPLOYER_KEY ? [DEPLOYER_KEY] : [],
     },
     // Whitechain Sepolia — for the Tokenize / Real-World Finance track.

@@ -13,3 +13,6 @@ contracts/node_modules/
 contracts/artifacts/
 contracts/cache/
 contracts/typechain-types/
+contracts/.env
+.env
+contracts/build/
