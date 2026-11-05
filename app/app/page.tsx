@@ -1,106 +1,83 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { stays, commons, poolState, TIER_LABEL } from "@/lib/seed";
-import { SiteHeader, SiteFooter, Stars, VerifiedMark, eur } from "@/components/ui";
+import { stays, poolState, Grade } from "@/lib/seed";
+import { SiteHeader, SiteFooter, VerifiedMark } from "@/components/ui";
+import { SmartImage, GradeBadge, GradeChip } from "@/components/media";
+
+function eur(n: number): string {
+  return n >= 1000 ? `€${(n / 1000).toFixed(0)}k` : `€${n}`;
+}
 
 export default function GuideHome() {
-  const ranked = [...stays].sort((a, b) => b.tier - a.tier || b.contributedEUR - a.contributedEUR);
+  const [filter, setFilter] = useState<Grade | "All">("All");
+  const shown = filter === "All" ? stays : stays.filter((s) => s.grade === filter);
 
   return (
     <>
       <SiteHeader />
 
       {/* Masthead */}
-      <section className="mx-auto max-w-6xl px-6 pt-16 pb-10">
-        <p className="rise font-mono text-[0.72rem] uppercase tracking-[0.2em] text-rust">
-          A curated guide · Barcelona &amp; the Costa Brava
+      <section className="mx-auto max-w-6xl px-6 pt-14 pb-8">
+        <p className="rise font-mono text-[0.72rem] uppercase tracking-[0.24em] text-rust">
+          The impact guide
         </p>
-        <h1 className="rise font-display text-5xl md:text-7xl leading-[0.95] mt-4 max-w-4xl tracking-tight">
-          Stay somewhere that builds the housing it stands on.
+        <h1 className="rise font-display text-5xl md:text-7xl leading-[0.92] mt-4 max-w-4xl tracking-tight">
+          Places you&apos;d cross the world for, that quietly keep locals in their homes.
         </h1>
         <p className="rise text-lg md:text-xl text-ink-soft mt-6 max-w-2xl leading-relaxed">
-          Every stay in the guide routes a share of what you pay into permanently
-          affordable homes for the people who live here. The more a place gives,
-          the higher its rating. The rating is not a promise: it is settled
-          on-chain, in euros, and anyone can check it.
+          A short list of extraordinary stays. Each one sends a fixed share of what you pay into
+          permanently affordable housing for the people who live where you&apos;re visiting. Graded
+          Gold, Silver or Copper by how much, and every euro verified on-chain.
         </p>
         <div className="rise mt-7 flex flex-wrap items-center gap-x-8 gap-y-3">
-          <span className="font-mono text-sm text-ink-soft">
-            ★ {TIER_LABEL[1]} &nbsp;·&nbsp; ★★ {TIER_LABEL[2]} &nbsp;·&nbsp; ★★★ {TIER_LABEL[3]}
+          <span className="font-display text-xl">
+            {poolState.homes} homes funded · {eur(poolState.contributedEUR)} from guests · {poolState.places} countries
           </span>
-          <VerifiedMark />
+          <VerifiedMark label="Verified on-chain" />
         </div>
       </section>
 
-      {/* Impact ticker */}
-      <section className="border-y rule bg-paper-deep/60">
-        <div className="mx-auto max-w-6xl px-6 py-5 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            [String(poolState.homesDelivered), "homes delivered"],
-            [`${(poolState.squareMetresDelivered / 1000).toFixed(1)}k m²`, "housing commons"],
-            [eur(poolState.contributedEUR), "contributed by stays"],
-            [String(poolState.operators), "stays in the guide"],
-          ].map(([v, l], i) => (
-            <div key={i}>
-              <div className="font-display text-3xl md:text-4xl leading-none">{v}</div>
-              <div className="font-mono text-[0.68rem] uppercase tracking-wider text-ink-soft mt-1.5">
-                {l}
+      {/* Filters */}
+      <section className="mx-auto max-w-6xl px-6 py-4 flex flex-wrap gap-3 items-center border-y rule">
+        <span className="font-mono text-[0.68rem] uppercase tracking-wider text-ink-soft mr-2">Filter by local impact</span>
+        {(["All", "Gold", "Silver", "Copper"] as const).map((g) => (
+          <GradeChip key={g} grade={g} active={filter === g} onClick={() => setFilter(g)} />
+        ))}
+      </section>
+
+      {/* The stays */}
+      <section className="mx-auto max-w-6xl px-6 py-10 grid md:grid-cols-2 gap-x-8 gap-y-14">
+        {shown.map((s, i) => (
+          <Link
+            key={s.slug}
+            href={`/stays/${s.slug}`}
+            className="rise group block"
+            style={{ animationDelay: `${i * 70}ms` }}
+          >
+            <div className="relative">
+              <SmartImage
+                src={s.image}
+                alt={s.name}
+                tint={s.tint}
+                className="aspect-[4/5] rounded-[4px] transition-transform duration-500 group-hover:scale-[1.012]"
+              />
+              <div className="absolute top-3 left-3">
+                <GradeBadge grade={s.grade} eur={`${eur(s.contributedEUR)} to local housing`} />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/70 via-black/20 to-transparent rounded-b-[4px]">
+                <p className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-white/80">{s.place}</p>
+                <h3 className="font-display text-3xl text-white leading-tight mt-0.5">{s.name}</h3>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* The listings */}
-      <section className="mx-auto max-w-6xl px-6 py-14">
-        <div className="flex items-baseline justify-between border-b-2 border-ink pb-2 mb-8">
-          <h2 className="font-display text-2xl">The stays</h2>
-          <span className="font-mono text-[0.7rem] uppercase tracking-wider text-ink-soft">
-            Ranked by homes funded
-          </span>
-        </div>
-
-        <ul className="grid md:grid-cols-2 gap-x-10 gap-y-12">
-          {ranked.map((s, i) => {
-            const funded = s.fundedCommons
-              .map((id) => commons.find((c) => c.id === id))
-              .filter(Boolean);
-            const homes = funded.reduce((n, c) => n + (c?.homes ?? 0), 0);
-            return (
-              <li key={s.slug} className="rise" style={{ animationDelay: `${i * 80}ms` }}>
-                <Link href={`/stays/${s.slug}`} className="group block">
-                  <div className="flex gap-5">
-                    <div
-                      className="plate shrink-0 w-28 h-36 rounded-[2px]"
-                      style={{ ["--plate-tint" as string]: s.tint }}
-                    />
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-3">
-                        <Stars tier={s.tier} className="text-lg" />
-                        <span className="font-mono text-[0.68rem] uppercase tracking-wider text-ink-soft">
-                          {TIER_LABEL[s.tier]}
-                        </span>
-                      </div>
-                      <h3 className="font-display text-2xl mt-1.5 leading-tight group-hover:text-rust transition-colors">
-                        {s.name}
-                      </h3>
-                      <p className="font-mono text-[0.72rem] uppercase tracking-wider text-ink-soft mt-0.5">
-                        {s.kind} · {s.neighbourhood}, {s.city}
-                      </p>
-                      <p className="text-[0.95rem] text-ink-soft mt-3 leading-relaxed">{s.blurb}</p>
-                      <div className="mt-3 pt-3 border-t rule flex items-center justify-between">
-                        <span className="text-sm">
-                          <span className="font-semibold text-ink">{homes}</span>
-                          <span className="text-ink-soft"> homes funded · {eur(s.contributedEUR)} in</span>
-                        </span>
-                        <VerifiedMark label="Verified" />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+            <p className="text-[1.05rem] text-ink mt-4 leading-snug max-w-xl">{s.oneLine}</p>
+            <p className="text-sm text-ink-soft mt-2">
+              {s.kind} · funds {s.funds.toLowerCase()} ·{" "}
+              <span className="text-ink font-semibold">{s.families} families kept in place</span>
+            </p>
+          </Link>
+        ))}
       </section>
 
       <SiteFooter />
