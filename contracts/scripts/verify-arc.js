@@ -3,7 +3,6 @@
 // the verifier can compile standalone. No API key needed.
 const fs = require("fs");
 const path = require("path");
-const { ethers } = require("ethers");
 
 const ROOT = path.join(__dirname, "..");
 const CONTRACTS = path.join(ROOT, "contracts");
@@ -49,25 +48,25 @@ const standardJson = {
   },
 };
 
-const abi = ethers.AbiCoder.defaultAbiCoder();
-const deployer = d.deployer;
-const enc = (types, vals) => abi.encode(types, vals).slice(2);
-
+// Constructor args are read off the chain: the deployed creation code is our
+// build bytecode followed by the ABI-encoded args, so we take whatever follows it.
 const targets = [
-  [
-    "TourismImpactPool",
-    d.pool,
-    enc(
-      ["address", "address", "address", "address", "address", "uint256", "uint256", "uint256"],
-      [d.eurc, d.certificate, d.registry, d.proof, deployer, 25_000_000_000n, 100_000_000_000n, 250_000_000_000n]
-    ),
-  ],
-  ["HousingCommonsRegistry", d.registry, enc(["address"], [deployer])],
-  ["ImpactCertificate", d.certificate, enc(["address"], [deployer])],
-  ["ProofOfImpact", d.proof, enc(["address"], [d.registry])],
+  ["TourismImpactPool", d.pool],
+  ["HousingCommonsRegistry", d.registry],
+  ["ImpactCertificate", d.certificate],
+  ["ProofOfImpact", d.proof],
 ];
 
-async function verify(name, address, ctorArgs) {
+async function ctorArgsFor(name, address) {
+  const local = JSON.parse(fs.readFileSync(path.join(ROOT, "build", `${name}.json`), "utf8")).bytecode.slice(2);
+  const info = await (await fetch(`${EXPLORER}/api/v2/smart-contracts/${address}`)).json();
+  const onchain = (info.creation_bytecode || "").slice(2);
+  if (!onchain.startsWith(local)) throw new Error("build bytecode differs from on-chain code; rebuild first");
+  return onchain.slice(local.length);
+}
+
+async function verify(name, address) {
+  const ctorArgs = await ctorArgsFor(name, address);
   const form = new FormData();
   form.append("compiler_version", COMPILER);
   form.append("autodetect_constructor_args", "false");
@@ -88,9 +87,9 @@ async function verify(name, address, ctorArgs) {
 
 (async () => {
   console.log(`Prepared standard JSON with ${Object.keys(sources).length} source files.\n`);
-  for (const [name, addr, ctorArgs] of targets) {
+  for (const [name, addr] of targets) {
     try {
-      await verify(name, addr, ctorArgs);
+      await verify(name, addr);
     } catch (e) {
       console.log(`${name}: error ${e.message}`);
     }
