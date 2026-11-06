@@ -133,9 +133,9 @@ function Contribute({ operator }: { operator: string }) {
 
 function Lend() {
   const { address } = useAccount();
-  const [id, setId] = useState("3");
+  const [id, setId] = useState("4");
   const [to, setTo] = useState(address ?? "");
-  const [amount, setAmount] = useState("5");
+  const [amount, setAmount] = useState("0.5");
   const { writeContractAsync, isPending } = useWriteContract();
   const [hash, setHash] = useState<string>();
   const [error, setError] = useState<string>();
@@ -177,9 +177,9 @@ function Lend() {
 }
 
 function Attest() {
-  const [id, setId] = useState("3");
-  const [homes, setHomes] = useState("6");
-  const [sqm, setSqm] = useState("480");
+  const [id, setId] = useState("4");
+  const [homes, setHomes] = useState("16");
+  const [sqm, setSqm] = useState("1050");
   const { writeContractAsync, isPending } = useWriteContract();
   const [hash, setHash] = useState<string>();
   const [error, setError] = useState<string>();
@@ -193,6 +193,24 @@ function Attest() {
         abi: proofAbi,
         functionName: "attest",
         args: [BigInt(id), Number(homes), Number(sqm), `ipfs://evidence-${id}`],
+        chainId: arcTestnet.id,
+      });
+      setHash(h);
+    } catch (e) {
+      setError(e instanceof Error ? e.message.split("\n")[0] : "Transaction failed");
+    }
+  }
+
+  // Governor step: mark the attested commons Delivered and credit the funding host's homes.
+  async function recognise() {
+    setError(undefined);
+    setHash(undefined);
+    try {
+      const h = await writeContractAsync({
+        address: flagshipPool,
+        abi: poolAbi,
+        functionName: "recognizeDelivery",
+        args: [BigInt(id)],
         chainId: arcTestnet.id,
       });
       setHash(h);
@@ -215,6 +233,10 @@ function Attest() {
         {isPending ? "Confirm in wallet…" : "Attest delivery"}
       </button>
       <p className="mt-2 font-mono text-[0.6rem] text-ink-soft">Steward of that commons only.</p>
+      <button className={action} onClick={recognise} disabled={isPending}>
+        {isPending ? "Confirm in wallet…" : "Recognise delivery"}
+      </button>
+      <p className="mt-2 font-mono text-[0.6rem] text-ink-soft">Governor, after the attestation.</p>
       <TxNote hash={hash} error={error} />
     </div>
   );

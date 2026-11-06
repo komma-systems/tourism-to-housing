@@ -14,6 +14,7 @@ import {
   STATUS_LABEL,
 } from "@/lib/contracts";
 import { SiteHeader, SiteFooter, VerifiedMark } from "@/components/ui";
+import { EnsNames } from "@/components/ens-names";
 
 type CommonsRow = {
   id: number;
@@ -132,10 +133,10 @@ export default function LedgerPage() {
       <section className="border-y rule bg-paper-deep/60">
         <div className="mx-auto max-w-6xl px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
-            [state ? eur(state.poolValue) : "—", "pool value (EURC)"],
-            [state ? eur(state.creditExtended) : "—", "credit extended"],
-            [state ? eur(state.poolEurc) : "—", "idle in pool"],
-            [state ? `${(state.couponBps / 100).toFixed(2)}%` : "—", "operator coupon"],
+            [state ? eur(state.poolValue) : "...", "pool value (EURC)"],
+            [state ? eur(state.creditExtended) : "...", "credit extended"],
+            [state ? eur(state.poolEurc) : "...", "idle in pool"],
+            [state ? `${(state.couponBps / 100).toFixed(2)}%` : "...", "lending rate"],
           ].map(([v, l], i) => (
             <div key={i}>
               <div className="font-display text-3xl md:text-4xl leading-none">{v}</div>
@@ -162,7 +163,10 @@ export default function LedgerPage() {
         <ul className="divide-y rule">
           {state?.commons.map((c) => (
             <li key={c.id} className="py-4 flex flex-wrap items-center gap-x-6 gap-y-2">
-              <span className="font-display text-xl min-w-48">{c.name}</span>
+              <span className="min-w-48">
+                <span className="font-display text-xl block">{c.name}</span>
+                <span className="font-mono text-[0.68rem] text-teal">{c.name.toLowerCase()}.retorn.eth</span>
+              </span>
               <span className="font-mono text-[0.72rem] uppercase tracking-wider text-ink-soft">
                 {c.geohash} · {c.legalWrapper}
               </span>
@@ -174,13 +178,15 @@ export default function LedgerPage() {
                 className="font-mono text-[0.6rem] uppercase tracking-[0.12em] px-2 py-0.5 rounded-full text-paper"
                 style={{ backgroundColor: c.status === 2 ? "var(--olive)" : c.status === 1 ? "var(--teal)" : "var(--ink-soft)" }}
               >
-                {STATUS_LABEL[c.status] ?? "—"}
+                {STATUS_LABEL[c.status] ?? "..."}
               </span>
               {c.delivered && <VerifiedMark label={`${c.homesDelivered} delivered`} />}
             </li>
           ))}
         </ul>
       </section>
+
+      {state && <EnsNames commonsNames={state.commons.map((c) => c.name)} />}
 
       {/* Contract addresses */}
       <section className="mx-auto max-w-6xl px-6 pb-16">
